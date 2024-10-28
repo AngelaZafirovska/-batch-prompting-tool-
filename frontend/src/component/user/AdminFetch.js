@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const AdminFetch = () => {
+  const inputData = useSelector(store=>store.inputData);  
   const [data, setData] = useState([
     { no: 1, name: 'Alice', age: 28 },
     { no: 2, name: 'Bob', age: 34 },
@@ -15,7 +18,7 @@ const AdminFetch = () => {
   const [filterText, setFilterText] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 3;
-
+  
   const sortedData = React.useMemo(() => {
     let sortableItems = [...data];
     if (sortConfig !== null) {
@@ -51,8 +54,26 @@ const AdminFetch = () => {
 
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
 
+  const history = useHistory();
+
+  const handleBack = () => {
+    history.push('/AdminPromptForm'); // Navigate back to Page1
+  };
+
+  const handleNext = () => {
+      history.push('/ManagementWindow'); // Navigate to Page2
+  };
+
   return (
-    <div className="container mt-5" style={{ color: 'blue', padding: '50px', border: '2px solid black' }}>
+    <div className="container mt-5">
+      <div className='row' style={{ marginBottom: '25px' }}>
+        <div className='col-md-1'>
+          <button className='form-control' onClick={handleBack}>Back</button>
+        </div>
+        <div className='offset-md-10 col-md-1'>
+          <button className='form-control' onClick={handleNext}>Next</button>
+        </div>
+      </div>
       <h1>User Table</h1>
       <input
         type="text"

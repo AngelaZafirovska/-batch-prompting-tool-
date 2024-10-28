@@ -41,12 +41,12 @@ const Prompt = require('../models/prompt');
 
 const generatePromptResponse = async (req, res) => {
     console.log(req.body);
-    const { prompt_text } = req.body.promptText;
-    const { content_url } = req.body.fs1;
-    const { target_url } = req.body.vs1;
-    const {keyword} = req.body.vs2;
+    // const { formdData }  = req.body;
+    const content_url  = req.body.fs1;
+    const target_url = req.body.vs1;
+    const keyword = req.body.vs2;
     
-    console.log(prompt_text);
+    // console.log(formData.promptText);
     try{
         // const newTemplate = new Tepmplate({
         //     prompt_text: prompt_text,
