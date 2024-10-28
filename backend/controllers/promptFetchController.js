@@ -46,11 +46,7 @@ const generatePromptResponse = async (req, res) => {
     const { target_url } = req.body.vs1;
     const {keyword} = req.body.vs2;
     
-<<<<<<< HEAD
     console.log(formData.promptText);
-=======
-    console.log(prompt_text);
->>>>>>> 23a0dca899346939740fd3f502c3a31720b3ac42
     try{
         if(formData.templateName) {
             // console.log('sadfasdfasdfasdf');
