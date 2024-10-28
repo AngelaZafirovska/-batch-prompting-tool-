@@ -2,8 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PromptForm from "./PromptForm";
 import AdminPromptForm from "./AdminPromptForm";
-import ManagementWindow from "../admin/ManagementWindow";
-import AdminFetch from "../admin/AdminFetch";
+import ManagementWindow from "./ManagementWindow";
+import AdminFetch from "./AdminFetch";
 
 // import FetchResults from "./FetchResults";
 
