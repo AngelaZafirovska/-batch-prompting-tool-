@@ -2,24 +2,24 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styles from "./style.css";
 
+const data = [
+  { id: 1, name: "Alice", Domain: "Alinatelehealth.com", targetURL: 1, prompts: 423,tobefetched: 0, exported:423 },
+  { id: 2, name: "Bob", Domain: "newsBlind.co.uk", targetURL: 2, prompts: 3,tobefetched: 36, exported:0 },
+  { id: 3, name: "Charlie", Domain: "Alinatelehealth.com", targetURL: 2, prompts: 3,tobefetched: 0, exported:5 },
+  ];
 const ManagementWindow = () => {
   const history = useHistory();
 
-  const [data, setData] = useState([
-    { id: 1, name: "Alice", age: 28 },
-    { id: 2, name: "Bob", age: 34 },
-    { id: 3, name: "Charlie", age: 22 },
-    { id: 4, name: "David", age: 30 },
-    { id: 5, name: "Eve", age: 29 },
-    { id: 6, name: "Frank", age: 25 },
-    { id: 7, name: "Grace", age: 27 },
-  ]);
 
   const [sortConfig, setSortConfig] = useState(null);
   const [filterText, setFilterText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 3;
+  const hanldeLink = (e) =>{
+    history.push("/FetchResult");
+    e.preventDefault();
 
+  }
   const sortedData = React.useMemo(() => {
     let sortableItems = [...data];
     if (sortConfig !== null) {
@@ -74,14 +74,16 @@ const ManagementWindow = () => {
       </div>
       <h3 className="text-center">OpenAI API FAQ Prompts</h3>
       <br />
-      <h5 className="text-center" style={{ color: "red" }}>
-        List of All Domains
+      <h5 className="text-center" style={{ color: "#ff3300", fontSize: "16px", marginBottom: "1.5rem" }}>
+        There are 36 prompots left to be fetched.
+        <br />
+        The page will autoload until you close this window.
       </h5>
-      <a href="asdfas">
-        <h3 className="text-center" style={{ color: "red" }}>
+      <a href="" style={{color: '#ff6600', textDecorationStyle: "underline", textDecorationColor: "#ff6600"}} onClick={hanldeLink}>
+        <h3 className="text-center" style={{ color: "#ff4500", textDecorationColor:"#ff4400",textDecorationStyle: "underline", cursor: "pointer"}}>
           Start Autoload to Fetch All
         </h3>
-      </a>{" "}
+      </a>
       <br />
       <br />
       <h5 className="text-center">List of All Domains</h5>
@@ -91,7 +93,7 @@ const ManagementWindow = () => {
             <th
               onClick={() => requestSort("id")}
               style={{
-                cursor: "pointer",
+                cursor: "pointer", backgroundColor: "#cdd7dc",
                 alignItems: "center",
                 justifyContent: "center",
               }}
@@ -100,7 +102,7 @@ const ManagementWindow = () => {
             </th>
             <th
               onClick={() => requestSort("name")}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
             >
               Unique <br />
               Target
@@ -108,14 +110,14 @@ const ManagementWindow = () => {
             </th>
             <th
               onClick={() => requestSort("age")}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
             >
               Prompts <br />
               Fetched
             </th>
             <th
               onClick={() => requestSort("age")}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
             >
               Prompts To
               <br />
@@ -123,34 +125,34 @@ const ManagementWindow = () => {
             </th>
             <th
               onClick={() => requestSort("age")}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
             >
               Exported
             </th>
             <th
               onClick={() => requestSort("age")}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
             >
               List <br />
               Target URLs
             </th>
             <th
               onClick={() => requestSort("age")}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
             >
               Export <br />
               All
             </th>
             <th
               onClick={() => requestSort("age")}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
             >
               Remove <br />
               All
             </th>
             <th
               onClick={() => requestSort("age")}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
             >
               {" "}
               Queue
@@ -160,9 +162,16 @@ const ManagementWindow = () => {
         <tbody>
           {paginatedData.map((user) => (
             <tr key={user.id}>
-              <td>{user.id}</td>
-              <td>{user.name}</td>
-              <td>{user.age}</td>
+              <td>{user.Domain}</td>
+              <td>{user.targetURL}</td>
+              <td>{user.prompts}</td>
+              <td>{user.tobefetched}</td>
+              <td>{user.exported}</td>
+              <td style={{color: "#ff4500"}}>[List]</td>
+              <td style={{color: "#ff4500"}}>[Export]</td>
+              <td style={{color: "#ff4500"}}>[Remove]</td>
+              <td style={{color: "#ff4500"}}>[MoveUp]</td>
+
             </tr>
           ))}
         </tbody>

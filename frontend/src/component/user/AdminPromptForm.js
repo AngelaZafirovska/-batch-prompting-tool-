@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 const AdminPromptForm = () => {
   const inputData = useSelector((store) => store.inputData);
   const history = useHistory();
-
+  const [selectedOption, setSelectedOption] = useState('yes');
   const [formData, setFormData] = useState({
     apiKey: "",
     fs1: "",
@@ -159,6 +159,9 @@ const AdminPromptForm = () => {
       history.push("/AdminFetch", {});
     }
   };
+  const handleRadioChange = (value) =>{
+    setSelectedOption(value)
+  }
   console.log(formData, "FormData");
   return (
     <div className="prompt-form mt-5" style={{ padding: "12px" }}>
@@ -217,7 +220,7 @@ const AdminPromptForm = () => {
                 <textarea
                   className="form-control"
                   type="text"
-                  name="vs2"
+                  name="vs3"
                   placeholder="Enter fixedSeed1(URL)"
                   value={formData.vs3}
                   onChange={handleChange}
@@ -232,7 +235,7 @@ const AdminPromptForm = () => {
                 <textarea
                   className="form-control"
                   type="text"
-                  name="vs1"
+                  name="promptNote"
                   placeholder="Enter VariableSeed1(URL)"
                   value={formData.promptNote}
                   onChange={handleChange}
@@ -250,7 +253,7 @@ const AdminPromptForm = () => {
                 <textarea
                   className="form-control"
                   type="text"
-                  name="vs2"
+                  name="promptText"
                   placeholder="Enter VariableSeed1(URL)"
                   value={formData.promptText}
                   onChange={handleChange}
@@ -271,48 +274,42 @@ const AdminPromptForm = () => {
                 <input
                   className="form-control"
                   type="text"
-                  name="vs3"
+                  name="templateName"
                   placeholder="Enter VariableSeed1(URL)"
                   value={formData.templateName}
                   onChange={handleChange}
                 />
               </div>
             </div>
-            {/* <div className="mb-3 row">
+            <div className="mb-3 row">
               <div className="col-md-6">
                 <label className="form-label">Create AI Prompt Queues</label>
               </div>
               <div className="col-md-6">
-                <div>
-                    <div className="col-md-2">
-                      <label>
+                <div >
+                  <label style={{marginRight: "10px"}}>
                           <input
-                            className="form-control"
                             type="radio"
                             value="option1"
                             name="promptNote"
-                            checked={selectedOption === 'option1'}
-                            onChange={handleChange}
+                            checked={selectedOption === "yes"}
+                            onChange={()=>handleRadioChange("yes")}
                           />
-                          Option 1
+                          y
                       </label>
-                    </div>
-                    <div className="col-md-2">
                         <label>
                             <input
-                              className="form-control"
                               type="radio"
                               value="option2"
                               name="promptNote"
-                              checked={selectedOption === 'option2'}
-                              onChange={handleChange}
+                              checked={selectedOption === "no"}
+                              onChange={()=>handleRadioChange("yes")}
                             />
-                            Option 2
+                            n
                         </label>
-                    </div>
                   </div>
               </div>
-            </div> */}
+            </div>
 
             <button type="submit" className="btn btn-primary w-100">
               Process

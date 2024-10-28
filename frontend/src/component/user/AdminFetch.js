@@ -5,19 +5,19 @@ import { useSelector } from "react-redux";
 const AdminFetch = () => {
   const inputData = useSelector((store) => store.inputData);
   const [data, setData] = useState([
-    { no: 1, name: "Alice", age: 28 },
-    { no: 2, name: "Bob", age: 34 },
-    { no: 3, name: "Charlie", age: 22 },
-    { no: 4, name: "David", age: 30 },
-    { no: 5, name: "Eve", age: 29 },
-    { no: 6, name: "Frank", age: 25 },
-    { no: 7, name: "Grace", age: 27 },
+    { no: 1, name:"asdf" ,date: "10/20/2024", templateName: "alinatel.com (title and description)" },
+    { no: 2, name:"asdf" ,date: "4/28/2024", templateName: "piloteosa.com" },
+    { no: 3, name:"asdf" ,date: "09/25/2024", templateName: "newblid.com" },
+    { no: 4, name:"asdf" ,date: "03/15/2024", templateName: "payturbsnow.com" },
+    { no: 5, name:"asdf" ,date: "06/2/2024", templateName: "alinatele.com" },
+    { no: 6, name:"asdf" ,date: "11/29/2024", templateName: "jdev.com" },
+    { no: 7, name:"asdf" ,date: "01/20/2024", templateName: "uplisting.io(blogs)" },
   ]);
 
   const [sortConfig, setSortConfig] = useState(null);
   const [filterText, setFilterText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 3;
+  const rowsPerPage = 10;
 
   const sortedData = React.useMemo(() => {
     let sortableItems = [...data];
@@ -67,7 +67,7 @@ const AdminFetch = () => {
   const handleNext = () => {
     history.push("/ManagementWindow"); // Navigate to Page2
   };
-
+console.log(paginatedData, "paginatedData")
   return (
     <div className="container mt-5">
       <div className="row" style={{ marginBottom: "25px" }}>
@@ -93,50 +93,50 @@ const AdminFetch = () => {
       <table className="table table-bordered">
         <thead className="thead-light">
           <tr>
-            <th onClick={() => requestSort("id")} style={{ cursor: "pointer" }}>
+            <th onClick={() => requestSort("id")} style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}>
               No
             </th>
             <th
               onClick={() => requestSort("name")}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
             >
               Date
             </th>
             <th
               onClick={() => requestSort("age")}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
             >
               Delete
             </th>
             <th
               onClick={() => requestSort("age")}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
             >
               Move Up
             </th>
             <th
               onClick={() => requestSort("age")}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
             >
               Load
             </th>
             <th
               onClick={() => requestSort("age")}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
             >
               Template
             </th>
           </tr>
         </thead>
         <tbody>
-          {paginatedData.map((user) => (
-            <tr key={user.no}>
-              <td>{user.no}</td>
-              <td>{user.date}</td>
-              <td>{user.delete}</td>
-              <td>{user.moveU}</td>
-              <td>{user.delete}</td>
-              <td>{user.delete}</td>
+          {paginatedData.map((data) => (
+            <tr key={data.no}>
+              <td>{data.no}</td>
+              <td>{data.date}</td>
+              <td style={{color: "#ff3300"}}>[delete]</td>
+              <td style={{color: "#ff3300"}}>[move up]</td>
+              <td style={{color: "#ff3300"}}>[load]</td>
+              <td>{data.templateName}</td>
             </tr>
           ))}
         </tbody>

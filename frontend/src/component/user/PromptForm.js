@@ -156,7 +156,7 @@ const PromptForm = () => {
                 <label className="form-label">variable seed1 (required)</label>
               </div>
               <div className="col-md-6">
-                    <input
+                    <textarea
                       className="form-control"
                       type="text"
                       name="vs1"
@@ -172,7 +172,7 @@ const PromptForm = () => {
                 <label className="form-label">variable seed2 (required)</label>
               </div>
               <div className="col-md-6">
-                    <input
+                    <textarea
                       className="form-control"
                       type="text"
                       name="vs2"
@@ -187,7 +187,7 @@ const PromptForm = () => {
                 <label className="form-label">variable seed3 (required)</label>
               </div>
               <div className="col-md-6">
-                    <input
+                    <textarea
                       className="form-control"
                       type="text"
                       name="vs3"
@@ -202,7 +202,7 @@ const PromptForm = () => {
                 <label className="form-label">prompt note</label>
               </div>
               <div className="col-md-6">
-                    <input
+                    <textarea
                       className="form-control"
                       type="text"
                       name="promptNote"
@@ -217,7 +217,7 @@ const PromptForm = () => {
                 <label className="form-label">prompt text</label>
               </div>
               <div className="col-md-6">
-                    <input
+                    <textarea
                       className="form-control"
                       type="text"
                       name="promptText"

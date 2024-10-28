@@ -15,6 +15,9 @@ tr, th, td{
   align-content: center;
   text-align: center;
 }
+th{
+  background-color: #cdd7dc;
+}
 .form-div{
   border-radius: 10px;
   box-shadow: 0px 0px 2px 2px #cecece;

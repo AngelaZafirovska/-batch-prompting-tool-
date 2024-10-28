@@ -4,6 +4,7 @@ import PromptForm from "./PromptForm";
 import AdminPromptForm from "./AdminPromptForm";
 import ManagementWindow from "./ManagementWindow";
 import AdminFetch from "./AdminFetch";
+import FetchResults from "./FetchResults";
 
 // import FetchResults from "./FetchResults";
 
@@ -15,6 +16,7 @@ const index = () => {
         <Route path="/adminPromptForm" component={AdminPromptForm} />
         <Route path="/ManagementWindow" component={ManagementWindow} />
         <Route path="/AdminFetch" component={AdminFetch} />
+        <Route path="/FetchResult" component={FetchResults} />
       </Switch>
     </Router>
   );
