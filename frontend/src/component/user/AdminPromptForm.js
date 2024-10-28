@@ -157,7 +157,7 @@ const AdminPromptForm = () => {
                   <textarea
                     className="form-control"
                     type="text"
-                    name="vs2"
+                    name="vs3"
                     placeholder="Enter fixedSeed1(URL)"
                     value={formData.vs3}
                     onChange={handleChange}
@@ -172,7 +172,7 @@ const AdminPromptForm = () => {
                     <textarea
                       className="form-control"
                       type="text"
-                      name="vs1"
+                      name="promptNote"
                       placeholder="Enter VariableSeed1(URL)"
                       value={formData.promptNote}
                       onChange={handleChange}
@@ -188,7 +188,7 @@ const AdminPromptForm = () => {
                     <textarea
                       className="form-control"
                       type="text"
-                      name="vs2"
+                      name="promptText"
                       placeholder="Enter VariableSeed1(URL)"
                       value={formData.promptText}
                       onChange={handleChange}
@@ -203,7 +203,7 @@ const AdminPromptForm = () => {
                     <input
                       className="form-control"
                       type="text"
-                      name="vs3"
+                      name="templateName"
                       placeholder="Enter VariableSeed1(URL)"
                       value={formData.templateName}
                       onChange={handleChange}

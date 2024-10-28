@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 
 // Define the schema
 const templateSchema = new mongoose.Schema({
-    user_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'User' // Reference to User model, if applicable
-    },
+    // user_id: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     required: true,
+    //     ref: 'User' // Reference to User model, if applicable
+    // },
 
     template_name: {
         type: String
