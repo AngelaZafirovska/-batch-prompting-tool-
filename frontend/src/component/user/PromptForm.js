@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
-// import { sendPromptRequest } from "../../action/promptAction";
+import { sendPromptRequest } from "../../action/promptAction";
 import { saveInputData } from "../../store/actions";
 const PromptForm = () => {
   const history = useHistory();
@@ -64,35 +64,37 @@ const PromptForm = () => {
         return isValid;
   };
 
-  const handleSubmit = async (e) => {
+  const handleNext = async (e) => {
     e.preventDefault();
     if (validate()) {
         console.log('Form submitted successfully!', formData);
         // Handle form submission (e.g., send to API)
         setFormData({ apiKey: '', fs1: '', fs2: '', vs1: '', vs2: '', vs3: '', promptNote: '', promptText: '', templateName: '' }); // Reset form
         setErrors({ apiKey: '', fs1: '', fs2: '', vs1: '', vs2: '', vs3: '', promptNote: '', promptText: '', templateName: '' }); // Clear errors
+
+        const dataToSend = { vs1: formData.vs1, vs2: formData.vs2, vs3: formData.vs3, promptNote: formData.promptNote, promptText: formData.promptText, templateName: formData.templateName,};
+        // const dataToSend = { vs1: 'asdfadsf', promptNote: '', promptText: '', TemplateName: '' };
+        dispatch(saveInputData(formData));
+        history.push('/adminPromptForm', { data: dataToSend });
     }
-    const response = await sendPromptRequest(
-      formData.apiKey,
-      formData.fs1,
-      formData.fs2,
-      formData.vs1.split(","),
-      formData.vs2,
-      formData.vs3,
-      formData.promptNote,
-      formData.promptText,
-      formData.templateName,
-    );
-    const parameterValue = "123"; 
-    if (response) {
-      // alert("Prompts processed successfully!");
-      history.push({
-        pathname: '/FetchResults',
-        state: { myParam: parameterValue },
-    });
-    } else {
-      alert("Error processing prompts.");
-    }
+    
+    // const response = await sendPromptRequest(
+    //   formData.apiKey,
+    //   formData.fs1,
+    //   formData.fs2,
+    //   formData.vs1.split(","),
+    //   formData.vs2,
+    //   formData.vs3,
+    //   formData.promptNote,
+    //   formData.promptText,
+    //   formData.templateName,
+    // );
+    // const parameterValue = "123"; 
+    // if (response) {
+    //   // alert("Prompts processed successfully!");
+    // } else {
+    //   alert("Error processing prompts.");
+    // }
   };
   
   return (
@@ -101,7 +103,7 @@ const PromptForm = () => {
       <div className="row">
         <div className="col-md-4"></div>
         <div className="col-md-4">
-          <form onSubmit={handleSubmit} className="card p-4 shadow">
+          <form className="card p-4 shadow">
             <div className="mb-3 row">
               <div className="col-md-6">
                 <label className="form-label">open AI secret key (required)</label>
@@ -240,7 +242,7 @@ const PromptForm = () => {
                     />
               </div>
             </div>
-            <button type="submit" className="btn btn-primary w-100">Submit</button>
+            <button onClick={handleNext} className="btn btn-primary w-100">Submit</button>
           </form>
         </div>
         <div className="col-md-4"></div>
