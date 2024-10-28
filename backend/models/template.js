@@ -9,16 +9,7 @@ const templateSchema = new mongoose.Schema({
         ref: 'User' // Reference to User model, if applicable
     },
 
-    template_id: {
-        type: Number, // Use String or ObjectId based on your requirements
-        required: true
-    },
-
     template_name: {
-        type: String
-    },
-
-    template_text: {
         type: String
     },
 

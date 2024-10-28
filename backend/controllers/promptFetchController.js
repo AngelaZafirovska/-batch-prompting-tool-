@@ -48,14 +48,18 @@ const generatePromptResponse = async (req, res) => {
     
     console.log(prompt_text);
     try{
-        // const newTemplate = new Tepmplate({
-        //     prompt_text: prompt_text,
-            
-        //     date: new Date(),
-        // });
-
-        // await newTemplate.save();
-        res.status(200).json({response: req.body.promptText});
+        if(formData.templateName) {
+            // console.log('sadfasdfasdfasdf');
+            const newTemplate = new Template({
+                template_name: formData.templateName,
+                date: new Date(),
+            }); 
+            console.log(newTemplate)               
+            await newTemplate.save(); 
+            res.status(200).json({response: formData.promptText});
+        } else {
+            res.status(200).json({message: "no template!"});
+        }
     } catch (error) {
         console.log('Error with communicating');
         res.status(500).json({error: 'Error communicating'})
