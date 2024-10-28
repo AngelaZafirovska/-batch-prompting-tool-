@@ -40,14 +40,17 @@ const Prompt = require('../models/prompt');
 // };
 
 const generatePromptResponse = async (req, res) => {
-    const formData = req.body.formData
-    console.log(formData.vs1);
-    // const { formdData }  = req.body;
-    const content_url  = req.body.fs1;
-    const target_url = req.body.vs1;
-    const keyword = req.body.vs2;
+    console.log(req.body);
+    const { prompt_text } = req.body.promptText;
+    const { content_url } = req.body.fs1;
+    const { target_url } = req.body.vs1;
+    const {keyword} = req.body.vs2;
     
+<<<<<<< HEAD
     console.log(formData.promptText);
+=======
+    console.log(prompt_text);
+>>>>>>> 23a0dca899346939740fd3f502c3a31720b3ac42
     try{
         if(formData.templateName) {
             // console.log('sadfasdfasdfasdf');

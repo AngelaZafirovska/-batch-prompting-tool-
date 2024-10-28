@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import styles from './style.css';
 
 const ManagementWindow = () => {
-  const history = useHistory();
-  
   const [data, setData] = useState([
     { id: 1, name: 'Alice', age: 28 },
     { id: 2, name: 'Bob', age: 34 },
@@ -53,19 +50,10 @@ const ManagementWindow = () => {
     setSortConfig({ key, direction });
   };
 
-  const handleBack = () => {
-    history.push('/AdminFetch'); // Navigate back to Page1
-  };
-
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
 
   return (
-    <div className="container mt-5">
-      <div className='row' style={{ marginBottom: '25px' }}>
-        <div className='col-md-1'>
-          <button className='form-control' onClick={handleBack}>Back</button>
-        </div>
-      </div>
+    <div className="container mt-5" style={{ padding: '50px', border: '2px solid black' }}>
         <h3 className="text-center">OpenAI API FAQ Prompts</h3><br />
         <h5 className="text-center" style={{ color: 'red' }}>List of All Domains</h5>
         <a href='asdfas'><h3 className="text-center" style={{ color: 'red' }}>Start Autoload to Fetch All</h3></a> <br /><br />
