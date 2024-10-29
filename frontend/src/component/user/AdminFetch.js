@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { fetchResults, loadData } from "../../action/promptAction";
 import { isAuth } from "../../action/authAction";
 
 const AdminFetch = () => {
-  const inputData = useSelector((store) => store.inputData);
+  // const inputData = useSelector((store) => store.inputData);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false)
 
@@ -116,10 +116,10 @@ const AdminFetch = () => {
           </button>
         </div>
       </div>
-      
+
       {
         loading &&
-        <div class="alert alert-primary" role="alert">
+        <div className="alert alert-primary" role="alert">
           Now template load processing...
         </div>
       }

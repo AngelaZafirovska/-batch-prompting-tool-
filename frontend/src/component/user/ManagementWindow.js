@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import styles from "./style.css";
+// import styles from "./style.css";
 
 const data = [
   { id: 1, name: "Alice", Domain: "Alinatelehealth.com", targetURL: 1, prompts: 423,tobefetched: 0, exported:423 },
