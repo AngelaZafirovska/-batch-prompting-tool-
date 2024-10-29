@@ -88,7 +88,6 @@ const AdminFetch = () => {
   const handleLoad = (templateId) => {
     const userData = isAuth();
     const data = { templateId, userId: userData._id }
-    console.log(data, '===data')
 
     loadData(data).then(res => {
       if (res.message === "ok") {

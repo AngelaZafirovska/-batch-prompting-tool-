@@ -17,6 +17,22 @@ const promptSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    fetched_count: {
+      type: Number,
+      required: false
+    },
+    exported_count: {
+      type: Number,
+      required: false
+    },
+    is_fetched: {
+      type: Boolean,
+      default: false // Default value set to false
+    },
+    is_exported: {
+      type: Boolean,
+      default: false // Default value set to false
+    },
     date: {
         type: Date,
         default: Date.now, // Automatically set to current date

@@ -68,6 +68,23 @@ export const loadData = async (data) => {
   }
 };
 
+export const generateTemplate = async (data) => {
+  try {
+    const response = await fetch("http://localhost:8000/api/template/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Fetch results error:", error);
+    return [];
+  }
+};
+
 export const saveData = (data) => {
   return async (dispatch) => {
     // dispatch({ type: SAVE_DATA_REQUEST });
