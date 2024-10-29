@@ -4,41 +4,18 @@ const mongoose = require('mongoose');
 
 // Define the schema
 const promptSchema = new mongoose.Schema({
+    user_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User", // Reference to User model, if applicable
+    },
     template_id: {
-        type: Number, // Assuming template_id is a string, adjust if necessary
+        type: mongoose.Schema.Types.ObjectId,
         required: true
     },
-    prompt_id: {
-        type: Number, // Assuming prompt_id is also a string
-        required: true
-    },
-    target_url: {
+    content: {
         type: String,
-        required: true
-    },
-    content_url: {
-        type: String,
-        required: true
-    },
-    keyword: {
-        type: String,
-        required: true
-    },
-    prompt_text: {
-        type: String,
-        required: true
-    },
-    prompt_note: {
-        type: String,
-        required: false // Optional field
-    },
-    is_fetched: {
-        type: Boolean,
-        default: false // Default value set to false
-    },
-    is_exported: {
-        type: Boolean,
-        default: false // Default value set to false
+        required: false
     },
     date: {
         type: Date,
