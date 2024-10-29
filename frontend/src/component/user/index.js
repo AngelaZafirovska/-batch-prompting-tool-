@@ -13,7 +13,7 @@ const index = () => {
     <Router>
       <Switch>
         <Route path="/user" exact component={PromptForm} />
-        <Route path="/adminPromptForm" component={AdminPromptForm} />
+        {/* <Route path="/adminPromptForm" component={AdminPromptForm} /> */}
         <Route path="/ManagementWindow" component={ManagementWindow} />
         <Route path="/AdminFetch" component={AdminFetch} />
         <Route path="/FetchResult" component={FetchResults} />

@@ -75,7 +75,7 @@ const PromptForm = () => {
         const dataToSend = { vs1: formData.vs1, vs2: formData.vs2, vs3: formData.vs3, promptNote: formData.promptNote, promptText: formData.promptText, templateName: formData.templateName,};
         // const dataToSend = { vs1: 'asdfadsf', promptNote: '', promptText: '', TemplateName: '' };
         dispatch(saveInputData(formData));
-        history.push('/adminPromptForm', { data: dataToSend });
+        history.push('/AdminFetch', { data: dataToSend });
     }
     
     // const response = await sendPromptRequest(
