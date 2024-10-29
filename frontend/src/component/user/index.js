@@ -10,15 +10,13 @@ import FetchResults from "./FetchResults";
 
 const index = () => {
   return (
-    <Router>
-      <Switch>
-        <Route path="/user" exact component={PromptForm} />
-        {/* <Route path="/adminPromptForm" component={AdminPromptForm} /> */}
-        <Route path="/ManagementWindow" component={ManagementWindow} />
-        <Route path="/AdminFetch" component={AdminFetch} />
-        <Route path="/FetchResult" component={FetchResults} />
-      </Switch>
-    </Router>
+    <Switch>
+      <Route path="/user" exact component={PromptForm} />
+      {/* <Route path="/user/adminPromptForm" component={AdminPromptForm} /> */}
+      <Route path="/user/AdminFetch" component={AdminFetch} />
+      <Route path="/user/ManagementWindow" component={ManagementWindow} />
+      <Route path="/user/FetchResult" component={FetchResults} />
+    </Switch>
   );
 };
 

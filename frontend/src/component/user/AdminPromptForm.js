@@ -156,7 +156,7 @@ const AdminPromptForm = () => {
         console.error("Error saving data:", error);
       }
       // const dataToSend  ={ fs1:  };
-      history.push("/AdminFetch", {});
+      history.push("/user/AdminFetch", {});
     }
   };
   const handleRadioChange = (value) =>{

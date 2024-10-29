@@ -16,7 +16,7 @@ const ManagementWindow = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 3;
   const hanldeLink = (e) =>{
-    history.push("/FetchResult");
+    history.push("/user/FetchResult");
     e.preventDefault();
 
   }
@@ -58,7 +58,7 @@ const ManagementWindow = () => {
   };
 
   const handleBack = () => {
-    history.push("/AdminFetch"); // Navigate back to Page1
+    history.push("/user/AdminFetch"); // Navigate back to Page1
   };
 
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);

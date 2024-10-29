@@ -82,8 +82,8 @@ const PromptForm = () => {
         const userData = isAuth()
         const data = { userId: userData._id, ...formData }
         generateTemplate(data)
-        
-        history.push('/AdminFetch', { data: dataToSend });
+
+        history.push('/user/AdminFetch', { data: dataToSend });
     }
     
     // const response = await sendPromptRequest(

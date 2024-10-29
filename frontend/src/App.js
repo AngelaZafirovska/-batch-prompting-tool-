@@ -8,6 +8,7 @@ import HomeAdmin from "./component/admin/index";
 import HomeUser from "./component/user/index";
 import Protected from "./component/private/Protected";
 import store from "./store/store";
+
 function App() {
   return (
     <Provider store={store}>
@@ -19,7 +20,7 @@ function App() {
             <Route path="/signup" component={SignUP} exact />
             <Route path="/signin" component={Signin} exact />
             <Route path="/admin" component={HomeAdmin} exact />
-            <Route path="/user" component={HomeUser} exact />
+            <Route path="/user" component={HomeUser} />
           </Switch>
         </Router>
       </div>
