@@ -11,6 +11,7 @@ const authRoutes = require("./routes/authRoutes");
 const blogRoutes = require("./routes/blog");
 const userRouters = require("./routes/userRoutes");
 const promptFetchRouters = require("./routes/promptFetchRoutes");
+const templateFetchRoutes = require("./routes/templateFetchRoutes");
 
 //app
 const app = express();
@@ -41,6 +42,7 @@ app.use("/api", blogRoutes);
 app.use("/api", authRoutes);
 app.use("/api", userRouters);
 app.use("/api", promptFetchRouters);
+app.use("/api", templateFetchRoutes);
 
 //port
 const port = process.env.PORT || 8000;
