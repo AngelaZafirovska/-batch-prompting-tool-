@@ -1,0 +1,26 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [closed]
+
+jobs:
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: self-hosted
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Build and Deploy
+        run: |
+          cd /home/ubuntu/-batch-prompting-tool-
+          git pull origin main
+          yarn install
+          yarn build
+          sudo cp -R dist/ /var/www/vhosts/frontend/
+          sudo service nginx restart
