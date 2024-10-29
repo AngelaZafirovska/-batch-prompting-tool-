@@ -12,7 +12,7 @@ const Header = ({ history }) => {
     <div>
       <Navbar color="light" light expand="md">
         <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
+        <Collapse isOpen={isOpen} navbar className="d-flex flex-row-reverse">
           <Nav className="ml-auto" navbar>
             {!isAuth() && (
               <React.Fragment>

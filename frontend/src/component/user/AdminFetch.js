@@ -1,18 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { fetchResults, loadData } from "../../action/promptAction";
+import { isAuth } from "../../action/authAction";
 
 const AdminFetch = () => {
   const inputData = useSelector((store) => store.inputData);
-  const [data, setData] = useState([
-    { no: 1, name:"asdf" ,date: "10/20/2024", templateName: "alinatel.com (title and description)" },
-    { no: 2, name:"asdf" ,date: "4/28/2024", templateName: "piloteosa.com" },
-    { no: 3, name:"asdf" ,date: "09/25/2024", templateName: "newblid.com" },
-    { no: 4, name:"asdf" ,date: "03/15/2024", templateName: "payturbsnow.com" },
-    { no: 5, name:"asdf" ,date: "06/2/2024", templateName: "alinatele.com" },
-    { no: 6, name:"asdf" ,date: "11/29/2024", templateName: "jdev.com" },
-    { no: 7, name:"asdf" ,date: "01/20/2024", templateName: "uplisting.io(blogs)" },
-  ]);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const userData = isAuth();
+    const data = { userId: userData._id }
+
+    fetchResults(data)
+      .then((res) => {
+        const len = res.templates.length
+        const templates = res.templates.map((val, i) => {
+          const date = new Date(val.date);
+          const formattedDate = date.toLocaleDateString("en-US", {
+            month: "2-digit",
+            day: "2-digit",
+            year: "numeric",
+          });
+
+          return { templateId: val._id, no: `${(i + 1)} of ${len}`, date: formattedDate, templateName: val.template_name }
+        })
+
+        setData(templates)
+      })
+      .catch((err) => console.log(err))
+  }, [isAuth])
 
   const [sortConfig, setSortConfig] = useState(null);
   const [filterText, setFilterText] = useState("");
@@ -36,7 +53,7 @@ const AdminFetch = () => {
   }, [data, sortConfig]);
 
   const filteredData = sortedData.filter((item) =>
-    item.name.toLowerCase().includes(filterText.toLowerCase())
+    item.templateName.toLowerCase().includes(filterText.toLowerCase())
   );
 
   const paginatedData = filteredData.slice(
@@ -67,7 +84,21 @@ const AdminFetch = () => {
   const handleNext = () => {
     history.push("/ManagementWindow"); // Navigate to Page2
   };
-console.log(paginatedData, "paginatedData")
+
+  const handleLoad = (templateId) => {
+    const userData = isAuth();
+    const data = { templateId, userId: userData._id }
+    console.log(data, '===data')
+
+    loadData(data).then(res => {
+      if (res.message === "ok") {
+        history.push("/ManagementWindow");
+      } else {
+        alert(res.message)
+      }
+    }).catch((err) => console.log(err))
+  }
+
   return (
     <div className="container mt-5">
       <div className="row" style={{ marginBottom: "25px" }}>
@@ -133,9 +164,9 @@ console.log(paginatedData, "paginatedData")
             <tr key={data.no}>
               <td>{data.no}</td>
               <td>{data.date}</td>
-              <td style={{color: "#ff3300"}}>[delete]</td>
-              <td style={{color: "#ff3300"}}>[move up]</td>
-              <td style={{color: "#ff3300"}}>[load]</td>
+              <td style={{ color: "#ff3300" }}>[delete]</td>
+              <td style={{ color: "#ff3300" }}>[move up]</td>
+              <td style={{ color: "#ff3300", cursor: "pointer" }} onClick={() => handleLoad(data.templateId)}>[load]</td>
               <td>{data.templateName}</td>
             </tr>
           ))}

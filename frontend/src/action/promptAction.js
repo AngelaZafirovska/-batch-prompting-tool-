@@ -34,16 +34,39 @@
 //   }
 // };
 
-// export const fetchResults = async () => {
-//   try {
-//     const response = await fetch("/api/results");
-//     const data = await response.json();
-//     return data;
-//   } catch (error) {
-//     console.error("Fetch results error:", error);
-//     return [];
-//   }
-// };
+export const fetchResults = async (data) => {
+  try {
+    const response = await fetch("http://localhost:8000/api/template/fetch", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Fetch results error:", error);
+    return [];
+  }
+};
+
+export const loadData = async (data) => {
+  try {
+    const response = await fetch("http://localhost:8000/api/prompt/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Fetch results error:", error);
+    return [];
+  }
+};
 
 export const saveData = (data) => {
   return async (dispatch) => {

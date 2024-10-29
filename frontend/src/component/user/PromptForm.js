@@ -26,10 +26,11 @@ const PromptForm = () => {
         if (!formData.fs1) {
           tempErrors.fs1 = 'FixedSeed1 is required.';
           isValid = false;
-        } else if (!/^(ftp|http|https):\/\/[^ "]+$/.test(formData.fs1)) {
-            tempErrors.fs1 = 'fs1 is not valid.';
-            isValid = false;
-        }
+        } 
+        // else if (!/^(ftp|http|https):\/\/[^ "]+$/.test(formData.fs1)) {
+        //     tempErrors.fs1 = 'fs1 is not valid.';
+        //     isValid = false;
+        // }
 
         // if (!formData.fs2) {
         //   tempErrors.fs2 = 'FixedSeed2 is required.';
