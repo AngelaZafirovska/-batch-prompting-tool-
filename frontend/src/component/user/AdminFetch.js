@@ -7,6 +7,7 @@ import { isAuth } from "../../action/authAction";
 const AdminFetch = () => {
   const inputData = useSelector((store) => store.inputData);
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const userData = isAuth();
@@ -78,25 +79,28 @@ const AdminFetch = () => {
   const history = useHistory();
 
   const handleBack = () => {
-    history.push("/AdminPromptForm"); // Navigate back to Page1
+    history.push("/user"); // Navigate back to Page1
   };
 
   const handleNext = () => {
-    history.push("/ManagementWindow"); // Navigate to Page2
+    history.push("/user/ManagementWindow"); // Navigate to Page2
   };
 
   const handleLoad = (templateId) => {
     const userData = isAuth();
     const data = { templateId, userId: userData._id }
+    setLoading(true)
 
     loadData(data).then(res => {
       if (res.message === "ok") {
-        history.push("/ManagementWindow");
+        history.push("/user/ManagementWindow");
       } else {
         alert(res.message)
       }
-    }).catch((err) => console.log(err))
+      setLoading(false)
+    }).catch((err) => { setLoading(false) })
   }
+
 
   return (
     <div className="container mt-5">
@@ -112,6 +116,14 @@ const AdminFetch = () => {
           </button>
         </div>
       </div>
+      
+      {
+        loading &&
+        <div class="alert alert-primary" role="alert">
+          Now template load processing...
+        </div>
+      }
+
       <h1>User Table</h1>
       <input
         type="text"
