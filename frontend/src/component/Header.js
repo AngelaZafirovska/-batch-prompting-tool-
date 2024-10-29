@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { isAuth, signout } from "../action/authAction";
-import { Collapse, Navbar, NavbarToggler, Nav, NavItem } from "reactstrap";
+import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavbarBrand } from "reactstrap";
 import { withRouter } from "react-router-dom";
 
 const Header = ({ history }) => {
@@ -10,7 +10,8 @@ const Header = ({ history }) => {
 
   return (
     <div>
-      <Navbar color="light" light expand="md">
+      <Navbar color="light" light expand="md" className="px-4">
+        <NavbarBrand href="/" className="nav-brand">Batch Prompting Tool</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar className="d-flex flex-row-reverse">
           <Nav className="ml-auto" navbar>
