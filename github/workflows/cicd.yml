@@ -20,7 +20,8 @@ jobs:
         run: |
           cd /home/ubuntu/-batch-prompting-tool-
           git pull origin main
+          cd frontend
           yarn install
           yarn build
-          sudo cp -R dist/ /var/www/vhosts/frontend/build
+          sudo cp -R build/ /var/www/vhosts/frontend/build
           sudo service nginx restart
