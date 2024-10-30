@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 const AdminPromptForm = () => {
   const inputData = useSelector((store) => store.inputData);
@@ -134,7 +135,7 @@ const AdminPromptForm = () => {
         templateName: "",
       }); // Clear errors
       try {
-        const response = await fetch("http://localhost:8000/api/fetch", {
+        const response = await fetch(`${REACT_APP_SERVER_URL}/api/fetch`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

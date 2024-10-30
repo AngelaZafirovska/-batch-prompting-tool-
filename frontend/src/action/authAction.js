@@ -2,54 +2,51 @@ import fetch from "isomorphic-fetch";
 import { API } from "../config/config";
 import cookie from "js-cookie";
 
-export const signup = (user) => {
-  return fetch(`${API}/signup`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  })
-    .then((res) => {
-      return res.json();
-    })
-    .catch((err) => {
-      return err;
+export const signup = async (user) => {
+  try {
+    const res = await fetch(`${API}/signup`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
     });
+    return await res.json();
+  } catch (err) {
+    return err;
+  }
 };
 
-export const signin = (user) => {
-  return fetch(`http://localhost:8000/api/signin`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  })
-    .then((res) => {
-      return res.json();
-    })
-    .catch((err) => {
-      return err;
+export const signin = async (user) => {
+  try {
+    const res = await fetch(`${API}/signin`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
     });
+    return await res.json();
+  } catch (err) {
+    return err;
+  }
 };
 
-export const signout = (next) => {
+export const signout = async (next) => {
   removeCookie("token");
   removeLocalStorage("user");
   next();
 
-  return fetch(`http://localhost:8000/api/signout`, {
-    method: "GET",
-  })
-    .then((response) => {
-      console.log("signout success");
-    })
-    .catch((err) => {
-      console.log(err);
+  try {
+    const response = await fetch(`${API}/signout`, {
+      method: "GET",
     });
+    console.log("signout success");
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 // set the cookie

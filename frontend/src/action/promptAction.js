@@ -1,4 +1,4 @@
-// import { API } from "../config/config";
+import { API } from "../config/config";
 
 // export const sendPromptRequest = async (
 //   apiKey,
@@ -36,7 +36,7 @@
 
 export const fetchResults = async (data) => {
   try {
-    const response = await fetch("http://localhost:8000/api/template/fetch", {
+    const response = await fetch(`${API}/template/fetch`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +53,7 @@ export const fetchResults = async (data) => {
 
 export const loadData = async (data) => {
   try {
-    const response = await fetch("http://localhost:8000/api/prompt/generate", {
+    const response = await fetch(`${API}/prompt/generate`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -70,7 +70,7 @@ export const loadData = async (data) => {
 
 export const generateTemplate = async (data) => {
   try {
-    const response = await fetch("http://localhost:8000/api/template/generate", {
+    const response = await fetch(`${API}/template/generate`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

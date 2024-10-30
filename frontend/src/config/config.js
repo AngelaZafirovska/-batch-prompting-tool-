@@ -1,1 +1,3 @@
-export const API = "http://localhost:8000/api";
+const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL;
+
+export const API = `${REACT_APP_SERVER_URL}/api`;
