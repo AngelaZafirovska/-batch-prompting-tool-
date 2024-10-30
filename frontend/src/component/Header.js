@@ -9,7 +9,7 @@ const Header = ({ history }) => {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light px-4">
+      <nav className="navbar navbar-define navbar-expand-lg navbar-light bg-light px-4">
         <a className="navbar-brand nav-brand" href="/">Batch Prompting Tool</a>
         <div className="collapse navbar-collapse d-flex flex-row-reverse" id="navbarTogglerDemo02">
           <ul className="navbar-nav mr-auto mt-2 mt-lg-0">

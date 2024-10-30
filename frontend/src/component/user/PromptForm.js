@@ -109,8 +109,8 @@ const PromptForm = () => {
     <div className="prompt-form mt-5"style={{ padding: '12px' }}  >
       <h2 className="text-center mb-10 ml-10">Submit Your URLs and Keywords</h2>
       <div className="row">
-        <div className="col-md-4"></div>
-        <div className="col-md-4">
+        <div className="col-md-3"></div>
+        <div className="col-md-6">
           <form className="card p-4 shadow">
             <div className="mb-3 row">
               <div className="col-md-6">
@@ -253,7 +253,7 @@ const PromptForm = () => {
             <button onClick={handleNext} className="btn btn-primary w-100">Submit</button>
           </form>
         </div>
-        <div className="col-md-4"></div>
+        <div className="col-md-3"></div>
       </div>
     </div>
   );
