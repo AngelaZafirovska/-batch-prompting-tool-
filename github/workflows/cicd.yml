@@ -22,5 +22,5 @@ jobs:
           git pull origin main
           yarn install
           yarn build
-          sudo cp -R dist/ /var/www/vhosts/frontend/
+          sudo cp -R dist/ /var/www/vhosts/frontend/build
           sudo service nginx restart
