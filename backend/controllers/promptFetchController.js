@@ -4,7 +4,7 @@ const OpenAI = require("openai");
 const Template = require("../models/template"); // Import your Template model
 const Prompt = require("../models/prompt");
 
-async function getContent(apiKey, prompt) {
+async function getContent(apiKey, content, note) {
   try {
     const openai = new OpenAI({
       apiKey: apiKey ?? process.env.OPENAI_API_KEY, // Ensure your OpenAI API key is in your environment variables
@@ -12,7 +12,16 @@ async function getContent(apiKey, prompt) {
   
     const aiResponse = await openai.chat.completions.create({
       model: 'gpt-4',
-      messages: [{ role: 'user', content: prompt }],
+      messages: [
+        {
+          "role": "system",
+          "content": note
+        },
+        {
+          "role": "user",
+          "content": content
+        }
+      ],
     });
 
     // Extract the content from the response
@@ -39,8 +48,7 @@ const generatePromptResponse = async (req, res) => {
     }
 
     const apiKey = template.api_key;
-    const content = `${template.prompt_text} #Note ${template.prompt_note}`
-    const result = await getContent(apiKey, content);
+    const result = await getContent(apiKey, template.prompt_text, template.prompt_note);
 
     if (result) {
       const newPrompt = new Prompt({
