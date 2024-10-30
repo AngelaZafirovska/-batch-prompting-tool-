@@ -15,19 +15,21 @@ const AdminFetch = () => {
 
     fetchResults(data)
       .then((res) => {
-        const len = res.templates.length
-        const templates = res.templates.map((val, i) => {
-          const date = new Date(val.date);
-          const formattedDate = date.toLocaleDateString("en-US", {
-            month: "2-digit",
-            day: "2-digit",
-            year: "numeric",
-          });
-
-          return { templateId: val._id, no: `${(i + 1)} of ${len}`, date: formattedDate, templateName: val.template_name }
-        })
-
-        setData(templates)
+        if (res) {
+          const len = res.templates?.length
+          const templates = res.templates.map((val, i) => {
+            const date = new Date(val.date);
+            const formattedDate = date.toLocaleDateString("en-US", {
+              month: "2-digit",
+              day: "2-digit",
+              year: "numeric",
+            });
+  
+            return { templateId: val._id, no: `${(i + 1)} of ${len}`, date: formattedDate, templateName: val.template_name }
+          })
+  
+          setData(templates)
+        }
       })
       .catch((err) => console.log(err))
   }, [isAuth])

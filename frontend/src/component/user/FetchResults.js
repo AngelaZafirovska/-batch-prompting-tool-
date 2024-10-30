@@ -42,7 +42,7 @@ const FetchResult = () => {
       ) : (
         <p className="text-center">No results yet.</p>
       )} */}
-      <div class="faqItem">
+      <div className="faqItem">
         <div className="text-left" style={{fontSize: "20px",  color: "#444444", marginBottom: "25px"}}>Question: Can I get Perfect Fit Roller Blinds in extra-wide sizes?</div>
         <p className="text-left text-justify" style={{fontSize: "20px",  color: "#444444", marginBottom: "25px"}}>Answer: While we specialize in a range of blinds, our Extra Wide Electric Roller Blinds
         do not come in the <a
