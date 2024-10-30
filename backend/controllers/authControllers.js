@@ -38,14 +38,14 @@ exports.signin = (req, res) => {
   //check if user exist
   User.findOne({ email }).exec((err, user) => {
     if (err || !user) {
-      return res.status(400).json({
+      return res.status(201).json({
         error: "User with that email does not exist. Please signup",
       });
     }
 
     // authenticate
     if (!user.authenticate(password)) {
-      return res.status(400).json({
+      return res.status(201).json({
         error: "Email and password do not match.",
       });
     }

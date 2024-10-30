@@ -35,10 +35,14 @@ const SigninComponent = ({ history }) => {
           //save user info to localStroage
           //authenticate user
           autheticate(data, () => {
-            if (isAuth() && isAuth().role === 1) {
-              history.push("/admin");
+            if (isAuth()) {
+              if (isAuth().role === 1) {
+                history.push("/admin");
+              } else {
+                history.push("/user");
+              }
             } else {
-              history.push("/user");
+              history.push("/signin");
             }
             // history.push("/admin");
           });
@@ -64,17 +68,17 @@ const SigninComponent = ({ history }) => {
     return (
       <>
         <form className="form-div" onSubmit={handleSubmit}>
-        <p className="signin-quest">
+          <p className="signin-quest">
             Don't have an account? <Link
-                    to="/signup"
-                    style={{ cursor: "pointer", color: "#0D6EFD" }}
-                  >
-                    Create one!
-                  </Link>
+              to="/signup"
+              style={{ cursor: "pointer", color: "#0D6EFD" }}
+            >
+              Create one!
+            </Link>
           </p>
-        <p className="signup-header">Sign in to your account</p>
+          <p className="signup-header">Sign in to your account</p>
           <div className="form-group">
-          <label className="mb-1" style={{fontSize: "14px"}}>Email Address</label>
+            <label className="mb-1" style={{ fontSize: "14px" }}>Email Address</label>
             <input
               value={email}
               onChange={handleChange("email")}
@@ -82,7 +86,7 @@ const SigninComponent = ({ history }) => {
               className="form-control sign-form mb-4"
               placeholder="Type your email"
             />
-            <label className="mb-1" style={{fontSize: "14px"}}>Password</label>
+            <label className="mb-1" style={{ fontSize: "14px" }}>Password</label>
             <input
               value={password}
               onChange={handleChange("password")}
@@ -100,11 +104,12 @@ const SigninComponent = ({ history }) => {
   return (
     <div className="container">
       <div className="d-flex justify-content-center">
-
-      {showLaoding()}
-      {showError()}
-      {showMessage()}
-      {showForm && signinForm()}
+        <div className="col-md-6">
+          {showLaoding()}
+          {showError()}
+          {showMessage()}
+          {showForm && signinForm()}
+        </div>
       </div>
     </div>
   );
