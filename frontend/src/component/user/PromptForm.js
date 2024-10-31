@@ -130,14 +130,14 @@ const PromptForm = () => {
             </div>
             <div className="mb-3 row">
               <div className="col-md-6">
-                <label className="form-label">fixed seed1 (required)</label>
+                <label className="form-label">Fixed Seed 1</label>
               </div>
               <div className="col-md-6">
                 <input
                   className="form-control"
                   type="text"
                   name="fs1"
-                  placeholder="Enter fs1(URL)"
+                  placeholder="Enter [FS1]"
                   value={formData.fs1}
                   onChange={handleChange}
                 />
@@ -146,14 +146,14 @@ const PromptForm = () => {
             </div>
             <div className="mb-3 row">
               <div className="col-md-6">
-                <label className="form-label">fixed seed2 (required)</label>
+                <label className="form-label">Fixed Seed 2 (Optional)</label>
               </div>
               <div className="col-md-6">
                 <input
                   className="form-control"
                   type="text"
                   name="fs2"
-                  placeholder="Enter fixedSeed1(URL)"
+                  placeholder="Enter [FS2]"
                   value={formData.fs2}
                   onChange={handleChange}
                 />
@@ -161,14 +161,14 @@ const PromptForm = () => {
             </div>
             <div className="mb-3 row">
               <div className="col-md-6">
-                <label className="form-label">variable seed1 (required)</label>
+                <label className="form-label">Target URL:</label>
               </div>
               <div className="col-md-6">
                 <textarea
                   className="form-control"
                   type="text"
                   name="vs1"
-                  placeholder="Enter VariableSeed1(URL)"
+                  placeholder="Enter [VS1]"
                   value={formData.vs1}
                   onChange={handleChange}
                 />
@@ -177,14 +177,15 @@ const PromptForm = () => {
             </div>
             <div className="mb-3 row">
               <div className="col-md-6">
-                <label className="form-label">variable seed2 (required)</label>
+                <label className="form-label">Anchor Text:</label><br/>
+                <label className="form-label">(One per line)</label>
               </div>
               <div className="col-md-6">
                 <textarea
                   className="form-control"
                   type="text"
                   name="vs2"
-                  placeholder="Enter VariableSeed1(URL)"
+                  placeholder="Enter [VS2]"
                   value={formData.vs2}
                   onChange={handleChange}
                 />
@@ -192,14 +193,15 @@ const PromptForm = () => {
             </div>
             <div className="mb-3 row">
               <div className="col-md-6">
-                <label className="form-label">variable seed3 (required)</label>
+                <label className="form-label">Power Page URLs:</label><br/>
+                <label className="form-label">(One per line)</label>
               </div>
               <div className="col-md-6">
                 <textarea
                   className="form-control"
                   type="text"
                   name="vs3"
-                  placeholder="Enter VariableSeed1(URL)"
+                  placeholder="Enter [VS3]"
                   value={formData.vs3}
                   onChange={handleChange}
                 />
@@ -207,14 +209,14 @@ const PromptForm = () => {
             </div>
             <div className="mb-3 row">
               <div className="col-md-6">
-                <label className="form-label">prompt note</label>
+                <label className="form-label">Prompt note</label>
               </div>
               <div className="col-md-6">
                 <textarea
                   className="form-control"
                   type="text"
                   name="promptNote"
-                  placeholder="Enter PromptNote"
+                  placeholder="Enter Prompt Note"
                   value={formData.promptNote}
                   onChange={handleChange}
                 />
@@ -222,14 +224,14 @@ const PromptForm = () => {
             </div>
             <div className="mb-3 row">
               <div className="col-md-6">
-                <label className="form-label">prompt text (required)</label>
+                <label className="form-label">Prompt Text</label>
               </div>
               <div className="col-md-6">
                 <textarea
                   className="form-control"
                   type="text"
                   name="promptText"
-                  placeholder="Enter PromptText"
+                  placeholder="Enter Prompt Text"
                   value={formData.promptText}
                   onChange={handleChange}
                 />
@@ -238,14 +240,13 @@ const PromptForm = () => {
             </div>
             <div className="mb-3 row">
               <div className="col-md-6">
-                <label className="form-label">template name</label>
+                <label className="form-label">Template Name (Optional):</label>
               </div>
               <div className="col-md-6">
                 <input
                   className="form-control"
                   type="text"
                   name="templateName"
-                  placeholder="Enter TemplateName(URL)"
                   value={formData.templateName}
                   onChange={handleChange}
                 />

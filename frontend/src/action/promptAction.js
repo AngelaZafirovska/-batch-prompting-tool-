@@ -51,6 +51,42 @@ export const fetchResults = async (data) => {
   }
 };
 
+export const generateTemplate = async (data) => {
+  try {
+    const response = await fetch(`${API}/template/generate`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Fetch results error:", error);
+    return [];
+  }
+};
+
+
+
+export const getAllDomains = async (data) => {
+  try {
+    const response = await fetch(`${API}/prompt/getAllDomains`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Fetch results error:", error);
+    return [];
+  }
+};
+
 export const loadData = async (data) => {
   try {
     const response = await fetch(`${API}/prompt/generate`, {
@@ -68,9 +104,9 @@ export const loadData = async (data) => {
   }
 };
 
-export const generateTemplate = async (data) => {
+export const fetchAllPrompts = async (data) => {
   try {
-    const response = await fetch(`${API}/template/generate`, {
+    const response = await fetch(`${API}/prompt/fetchAll`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -84,6 +120,7 @@ export const generateTemplate = async (data) => {
     return [];
   }
 };
+
 
 export const saveData = (data) => {
   return async (dispatch) => {

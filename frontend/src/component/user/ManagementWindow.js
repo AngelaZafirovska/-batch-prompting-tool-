@@ -1,24 +1,55 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { getAllDomains, fetchAllPrompts } from "../../action/promptAction";
+import { isAuth } from "../../action/authAction";
+
 // import styles from "./style.css";
 
 const data = [
-  { id: 1, name: "Alice", Domain: "Alinatelehealth.com", targetURL: 1, prompts: 423,tobefetched: 0, exported:423 },
-  { id: 2, name: "Bob", Domain: "newsBlind.co.uk", targetURL: 2, prompts: 3,tobefetched: 36, exported:0 },
-  { id: 3, name: "Charlie", Domain: "Alinatelehealth.com", targetURL: 2, prompts: 3,tobefetched: 0, exported:5 },
-  ];
+  { id: 1, name: "Alice", Domain: "Alinatelehealth.com", targetURL: 1, prompts: 423, tobefetched: 0, exported: 423 },
+  { id: 2, name: "Bob", Domain: "newsBlind.co.uk", targetURL: 2, prompts: 3, tobefetched: 36, exported: 0 },
+  { id: 3, name: "Charlie", Domain: "Alinatelehealth.com", targetURL: 2, prompts: 3, tobefetched: 0, exported: 5 },
+];
 const ManagementWindow = () => {
   const history = useHistory();
+  const [data, setData] = useState([]);
+  const [promptsNum, setPromptsNum] = useState(0)
+
+  useEffect(() => {
+    const userData = isAuth();
+    const data = { userId: userData._id }
+
+    getAllDomains(data).then((res) => {
+      if (res) {
+        const domains = res.allDomains
+        if (domains?.length > 0) {
+          const num = domains.reduce((accumulator, domain) => {
+            return accumulator + domain.prompts_tobe_fetched;
+          }, 0);
+
+          setPromptsNum(num)
+          setData(domains)
+        }
+      }
+    })
+      .catch((err) => console.log(err))
+  }, [])
 
 
   const [sortConfig, setSortConfig] = useState(null);
   const [filterText, setFilterText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 3;
-  const hanldeLink = (e) =>{
-    history.push("/user/FetchResult");
+  const hanldeLink = (e) => {
     e.preventDefault();
 
+    const userData = isAuth();
+    const data = { userId: userData._id }
+    fetchAllPrompts(data).then((res) => {
+      console.log(res)
+      history.push("/user/FetchResult");
+
+    }).catch((err) => console.log(err))
   }
   const sortedData = React.useMemo(() => {
     let sortableItems = [...data];
@@ -37,7 +68,7 @@ const ManagementWindow = () => {
   }, [data, sortConfig]);
 
   const filteredData = sortedData.filter((item) =>
-    item.name.toLowerCase().includes(filterText.toLowerCase())
+    item.domain.toLowerCase().includes(filterText.toLowerCase())
   );
 
   const paginatedData = filteredData.slice(
@@ -74,16 +105,21 @@ const ManagementWindow = () => {
       </div>
       <h3 className="text-center">OpenAI API FAQ Prompts</h3>
       <br />
-      <h5 className="text-center" style={{ color: "#ff3300", fontSize: "16px", marginBottom: "1.5rem" }}>
-        There are 36 prompots left to be fetched.
-        <br />
-        The page will autoload until you close this window.
-      </h5>
-      <a href="" style={{color: '#ff6600', textDecorationStyle: "underline", textDecorationColor: "#ff6600"}} onClick={hanldeLink}>
-        <h3 className="text-center" style={{ color: "#ff4500", textDecorationColor:"#ff4400",textDecorationStyle: "underline", cursor: "pointer"}}>
-          Start Autoload to Fetch All
-        </h3>
-      </a>
+      {
+        promptsNum > 0 &&
+        <>
+          <h5 className="text-center" style={{ color: "#ff3300", fontSize: "16px", marginBottom: "1.5rem" }}>
+            There are {promptsNum} prompts left to be fetched.
+            <br />
+            The page will autoload until you close this window.
+          </h5>
+          <a href="" style={{ color: '#ff6600', textDecorationStyle: "underline", textDecorationColor: "#ff6600" }} onClick={hanldeLink}>
+            <h3 className="text-center" style={{ color: "#ff4500", textDecorationColor: "#ff4400", textDecorationStyle: "underline", cursor: "pointer" }}>
+              Start Autoload to Fetch All
+            </h3>
+          </a>
+        </>
+      }
       <br />
       <br />
       <h5 className="text-center">List of All Domains</h5>
@@ -161,16 +197,16 @@ const ManagementWindow = () => {
         </thead>
         <tbody>
           {paginatedData.map((user) => (
-            <tr key={user.id}>
-              <td>{user.Domain}</td>
-              <td>{user.targetURL}</td>
-              <td>{user.prompts}</td>
-              <td>{user.tobefetched}</td>
-              <td>{user.exported}</td>
-              <td style={{color: "#ff4500"}}>[List]</td>
-              <td style={{color: "#ff4500"}}>[Export]</td>
-              <td style={{color: "#ff4500"}}>[Remove]</td>
-              <td style={{color: "#ff4500"}}>[MoveUp]</td>
+            <tr key={Math.random()}>
+              <td>{user.domain}</td>
+              <td>{user.unique_target_urls}</td>
+              <td>{user.prompts_fetched}</td>
+              <td>{user.prompts_tobe_fetched}</td>
+              <td>{user.exported_count}</td>
+              <td style={{ color: "#ff4500" }}>[List]</td>
+              <td style={{ color: "#ff4500" }}>[Export]</td>
+              <td style={{ color: "#ff4500" }}>[Remove]</td>
+              <td style={{ color: "#ff4500" }}>[MoveUp]</td>
 
             </tr>
           ))}

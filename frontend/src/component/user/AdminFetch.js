@@ -8,31 +8,42 @@ const AdminFetch = () => {
   // const inputData = useSelector((store) => store.inputData);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false)
+  const [fetchLoad, setFetchLoad] = useState(false)
 
   useEffect(() => {
-    const userData = isAuth();
-    const data = { userId: userData._id }
+    const fetchData = async () => {
+      const userData = isAuth();
+      const fetchParams = { userId: userData._id };
 
-    fetchResults(data)
-      .then((res) => {
+      setFetchLoad(true);
+      try {
+        const res = await fetchResults(fetchParams);
         if (res) {
-          const len = res.templates?.length
-          const templates = res.templates.map((val, i) => {
+          const templates = res.templates?.map((val, i) => {
             const date = new Date(val.date);
             const formattedDate = date.toLocaleDateString("en-US", {
               month: "2-digit",
               day: "2-digit",
               year: "numeric",
             });
-  
-            return { templateId: val._id, no: `${(i + 1)} of ${len}`, date: formattedDate, templateName: val.template_name }
-          })
-  
-          setData(templates)
+            return {
+              templateId: val._id,
+              no: `${i + 1} of ${res.templates.length}`,
+              date: formattedDate,
+              templateName: val.template_name,
+            };
+          });
+          setData(templates || []);
         }
-      })
-      .catch((err) => console.log(err))
-  }, [isAuth])
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setFetchLoad(false);
+      }
+    };
+
+    fetchData();
+  }, [fetchLoad]);
 
   const [sortConfig, setSortConfig] = useState(null);
   const [filterText, setFilterText] = useState("");
@@ -125,6 +136,11 @@ const AdminFetch = () => {
           Now template load processing...
         </div>
       }
+      {paginatedData.length === 0 && fetchLoad && (
+        <div className="alert alert-primary" role="alert">
+          Loading...
+        </div>
+      )}
 
       <h1>User Table</h1>
       <input
@@ -173,16 +189,18 @@ const AdminFetch = () => {
           </tr>
         </thead>
         <tbody>
-          {paginatedData.map((data) => (
-            <tr key={data.no}>
-              <td>{data.no}</td>
-              <td>{data.date}</td>
-              <td style={{ color: "#ff3300" }}>[delete]</td>
-              <td style={{ color: "#ff3300" }}>[move up]</td>
-              <td style={{ color: "#ff3300", cursor: "pointer" }} onClick={() => handleLoad(data.templateId)}>[load]</td>
-              <td>{data.templateName}</td>
-            </tr>
-          ))}
+          {
+            paginatedData.map((data) => (
+              <tr key={data.no}>
+                <td>{data.no}</td>
+                <td>{data.date}</td>
+                <td style={{ color: "#ff3300" }}>[delete]</td>
+                <td style={{ color: "#ff3300" }}>[move up]</td>
+                <td style={{ color: "#ff3300", cursor: "pointer" }} onClick={() => handleLoad(data.templateId)}>[load]</td>
+                <td>{data.templateName}</td>
+              </tr>
+            ))
+          }
         </tbody>
       </table>
       <div className="d-flex justify-content-between">

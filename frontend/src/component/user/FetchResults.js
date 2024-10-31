@@ -56,7 +56,7 @@ const FetchResult = () => {
       <div className="text-center"  style={{height: "1px", background: "#bbbbbb", marginBottom: "50px"}}></div>
       <div className="text-center" style={{color: "#ff4400"}}>There are 35 Prompts left to be fetched.
         <br />
-        The page will autoload until your close this window.
+        The page will autoload until you close this window.
       </div>
     </div>
   );
