@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 // import { useSelector } from "react-redux";
 import { fetchTemplates, loadData } from "../../action/promptAction";
@@ -40,51 +40,49 @@ const AdminFetch = () => {
     currentPage * rowsPerPage
   );
 
+  const loadTemplates = useCallback(async () => {
+    const userData = isAuth();
+    const fetchParams = { userId: userData?._id };
+
+    try {
+      const res = await fetchTemplates(fetchParams); // Assuming `fetchTemplates` is a function from props or imports
+      if (res) {
+        const templates = res.templates?.map((val, i) => {
+          const date = new Date(val.date);
+          const formattedDate = date.toLocaleDateString("en-US", {
+            month: "2-digit",
+            day: "2-digit",
+            year: "numeric",
+          });
+          return {
+            templateId: val?._id,
+            no: `${i + 1} of ${res.templates.length}`,
+            date: formattedDate,
+            templateName: val?.template_name,
+          };
+        });
+        setData(templates || []);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsFetched(true);
+    }
+  }, [setData]);
+
   useEffect(() => {
     if (!isFetched) {
-      const fetchData = async () => {
-        const userData = isAuth();
-        const fetchParams = { userId: userData._id };
-
-        try {
-          const res = await fetchTemplates(fetchParams);
-          if (res) {
-            const templates = res.templates?.map((val, i) => {
-              const date = new Date(val.date);
-              const formattedDate = date.toLocaleDateString("en-US", {
-                month: "2-digit",
-                day: "2-digit",
-                year: "numeric",
-              });
-              return {
-                templateId: val._id,
-                no: `${i + 1} of ${res.templates.length}`,
-                date: formattedDate,
-                templateName: val.template_name,
-              };
-            });
-            setData(templates || []);
-          }
-        } catch (error) {
-          console.error(error);
-        } finally {
-          setIsFetched(true);
-        }
-      };
-
-      fetchData();
+      loadTemplates();
     }
-  }, [isFetched, paginatedData])
 
-  useEffect(() => {
     const timer = setTimeout(() => {
-      if (data.length === 0) {
-        setIsFetched(false)
+      if (data?.length === 0) {
+        window.location.reload();
       }
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [data]);
+  }, [isFetched, loadTemplates]);
 
   const requestSort = (key) => {
     let direction = "ascending";
