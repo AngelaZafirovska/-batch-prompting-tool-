@@ -177,7 +177,7 @@ const PromptForm = () => {
             </div>
             <div className="mb-3 row">
               <div className="col-md-6">
-                <label className="form-label">Anchor Text:</label><br/>
+                <label className="form-label">Anchor Text:</label><br />
                 <label className="form-label">(One per line)</label>
               </div>
               <div className="col-md-6">
@@ -193,7 +193,7 @@ const PromptForm = () => {
             </div>
             <div className="mb-3 row">
               <div className="col-md-6">
-                <label className="form-label">Power Page URLs:</label><br/>
+                <label className="form-label">Power Page URLs:</label><br />
                 <label className="form-label">(One per line)</label>
               </div>
               <div className="col-md-6">
@@ -209,7 +209,7 @@ const PromptForm = () => {
             </div>
             <div className="mb-3 row">
               <div className="col-md-6">
-                <label className="form-label">Prompt note</label>
+                <label className="form-label">Prompt Note</label>
               </div>
               <div className="col-md-6">
                 <textarea
@@ -240,7 +240,8 @@ const PromptForm = () => {
             </div>
             <div className="mb-3 row">
               <div className="col-md-6">
-                <label className="form-label">Template Name (Optional):</label>
+                <label className="form-label">Template Name (Optional):</label><br />
+                <label className="form-label" style={{ fontSize: "14px" }}>Add a name to save the prompt as a template. <br /> Create API Prompt Queues:</label>
               </div>
               <div className="col-md-6">
                 <input
@@ -252,7 +253,7 @@ const PromptForm = () => {
                 />
               </div>
             </div>
-            <button onClick={handleNext} className="btn btn-primary w-100">Submit</button>
+            <button onClick={handleNext} className="btn btn-primary w-100">Process</button>
           </form>
         </div>
         <div className="col-md-3"></div>
