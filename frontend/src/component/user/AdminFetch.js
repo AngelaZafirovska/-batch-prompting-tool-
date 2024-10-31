@@ -153,7 +153,7 @@ const AdminFetch = () => {
       }
       {paginatedData.length === 0 && !isFetched && (
         <div className="alert alert-primary" role="alert">
-          Loading...
+          No data
         </div>
       )}
 

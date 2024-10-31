@@ -90,7 +90,7 @@ const FetchResult = () => {
           </>
           :
           <div className="alert alert-primary" role="alert">
-            Loading...
+            No data
           </div>
       }
     </div>

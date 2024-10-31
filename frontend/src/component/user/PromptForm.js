@@ -164,7 +164,7 @@ const PromptForm = () => {
           <li onClick={() => handleStep(4)} id="fetchresult"><strong>Fetch Result</strong></li>
         </ul>
       </div>
-      <h2 className="text-center mb-10 ml-10 mt-4 title">Type Your URLs and Keywords</h2>
+      <h2 className="text-center mb-10 ml-10 title">Type Your URLs and Keywords</h2>
       <div className="row">
         <div className="col-md-2"></div>
         <div className="col-md-8">

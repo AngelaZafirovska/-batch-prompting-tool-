@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import Header from "./component/Header";
+import Footer from "./component/Footer";
 import SignUP from "./pages/SignUp";
 import Signin from "./pages/SignIn";
 import HomeAdmin from "./component/admin/index";
@@ -23,6 +24,7 @@ function App() {
             <Route path="/user" component={HomeUser} />
           </Switch>
         </Router>
+        <Footer />
       </div>
     </Provider>
   );
