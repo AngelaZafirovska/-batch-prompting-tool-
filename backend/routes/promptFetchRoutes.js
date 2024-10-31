@@ -1,5 +1,5 @@
 const express = require('express');
-const { generatePromptResponse, fetchAllPrompt, getAllDomains } = require('../controllers/promptFetchController');
+const { generatePromptResponse, fetchAllPrompt, fetchResult, getAllDomains } = require('../controllers/promptFetchController');
 
 const router = express.Router();
 
@@ -7,5 +7,6 @@ const router = express.Router();
 router.post('/prompt/fetchAll', fetchAllPrompt);
 router.post('/prompt/getAllDomains', getAllDomains);
 router.post('/prompt/generate', generatePromptResponse);
+router.post('/prompt/fetchResult', fetchResult);
 
 module.exports = router;

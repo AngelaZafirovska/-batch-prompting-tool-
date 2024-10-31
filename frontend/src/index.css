@@ -57,3 +57,7 @@ th{
   font-family: 'Times New Roman', Times, serif;
   font-weight: 900;
 }
+
+.faqItem {
+  white-space: pre-line;
+}

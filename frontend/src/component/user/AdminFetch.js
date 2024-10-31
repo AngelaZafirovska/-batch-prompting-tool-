@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 // import { useSelector } from "react-redux";
-import { fetchResults, loadData } from "../../action/promptAction";
+import { fetchTemplates, loadData } from "../../action/promptAction";
 import { isAuth } from "../../action/authAction";
 
 const AdminFetch = () => {
@@ -47,7 +47,7 @@ const AdminFetch = () => {
         const fetchParams = { userId: userData._id };
 
         try {
-          const res = await fetchResults(fetchParams);
+          const res = await fetchTemplates(fetchParams);
           if (res) {
             const templates = res.templates?.map((val, i) => {
               const date = new Date(val.date);

@@ -120,7 +120,7 @@ const fetchAllPrompt = async (req, res) => {
       user_id: userId,
       _id: { $nin: excludedTemplateIds }
     }).exec();
-    
+
     // Process tasks
     templates.forEach(template => {
       addTask({ template }, userId);
@@ -191,6 +191,73 @@ const getAllDomains = async (req, res) => {
   }
 }
 
+const fetchResult = async (req, res) => {
+  try {
+    const formData = req.body;
+    const userId = formData.userId;
+    console.log('Prompt processing userId:', userId);
+
+    // Define a timeout for 10 seconds
+    const startTime = Date.now();
+    const timeout = 10000; // 10 seconds in milliseconds
+
+    // Function to fetch prompts with templates
+    const fetchPrompts = async () => {
+      const prompts = await Prompt.aggregate([
+        { $match: { user_id: mongoose.Types.ObjectId(userId) } },
+        {
+          $lookup: {
+            from: "templates", // Collection name for Template
+            localField: "template_id",
+            foreignField: "_id",
+            as: "template_data"
+          }
+        },
+        { $unwind: "$template_data" } // Flatten the template data array
+      ]);
+      const excludedTemplateIds = prompts.map(prompt => prompt.template_id);
+
+      const templates = await Template.find({
+        user_id: userId,
+        _id: { $nin: excludedTemplateIds }
+      }).exec();
+
+      return { prompts, templates };
+    };
+
+    let result;
+    while (true) {
+      result = await fetchPrompts();
+
+      if (result.prompts.length > 0) {
+        console.log('New template found:', result.prompts.length);
+        break;
+      }
+
+      // Break out after 10 seconds
+      if (Date.now() - startTime > timeout) {
+        console.log('Timeout reached, stopping fetch.');
+        break;
+      }
+
+      // Small delay to avoid overwhelming the database
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+
+    const toBeFetched = result.templates ? result.templates?.length : 0;
+
+    res.status(200).json({
+      message: toBeFetched > 0 ? "New prompt fetched" : "No new prompt within timeout",
+      toBeFetched,
+      prompts: result.prompts?.length > 0 ? result.prompts[0] : null
+    });
+  } catch (error) {
+    console.error("Error communicating:", error.message);
+    res.status(500).json({ error: "Error communicating" });
+  }
+};
+
+
 const generatePromptResponse = async (req, res) => {
   const formData = req.body;
 
@@ -237,4 +304,4 @@ const generatePromptResponse = async (req, res) => {
     res.status(500).json({ error: "Error communicating" });
   }
 };
-module.exports = { generatePromptResponse, fetchAllPrompt, cancelTaskByUserId, getAllDomains };
+module.exports = { generatePromptResponse, fetchAllPrompt, fetchResult, cancelTaskByUserId, getAllDomains };
