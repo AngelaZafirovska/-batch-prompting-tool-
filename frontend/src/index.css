@@ -77,6 +77,11 @@ th {
   white-space: pre-line;
 }
 
+.step-container {
+  margin-top: 40px;
+  max-width: 1000px;
+}
+
 #progressbar {
   margin-bottom: 30px;
   overflow: hidden;

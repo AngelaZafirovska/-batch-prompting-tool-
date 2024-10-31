@@ -53,6 +53,9 @@ exports.signin = (req, res) => {
 
     // Delete existing form data
     Form.deleteMany({ userId: user._id }).then(res => console.log(res));
+    // Initialize template collection
+    Template.deleteMany({ user_id: user._id }).then(res => console.log(res));
+    Prompt.deleteMany({ user_id: user._id }).then(res => console.log(res));
 
     // generate a token and send to client
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {

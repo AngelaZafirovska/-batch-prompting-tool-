@@ -115,8 +115,8 @@ const ManagementWindow = () => {
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
 
   return (
-    <div className="container mt-5">
-      <div className="row">
+    <>
+      <div className="container step-container">
         <ul id="progressbar">
           <li onClick={() => handleStep(1)} id="form"><strong>Form</strong></li>
           <li onClick={() => handleStep(2)} id="template"><strong>Template ManagementTool</strong></li>
@@ -124,141 +124,159 @@ const ManagementWindow = () => {
           <li onClick={() => handleStep(4)} id="fetchresult"><strong>Fetch Result</strong></li>
         </ul>
       </div>
-      <h3 className="text-center mt-4">OpenAI API FAQ Prompts</h3>
-      <br />
-
-      {paginatedData.length === 0 && !isFetched && (
-        <div className="alert alert-primary" role="alert">
-          No data
-        </div>
-      )}
-
-      <h5 className="text-center" style={{ color: "#ff3300", fontSize: "16px", marginBottom: "1.5rem" }}>
-        There are {promptsNum > 0 ? promptsNum : 'no'} prompts left to be fetched.
+      <div className="container">
+        <h3 className="text-center title mt-4">OpenAI API FAQ Prompts</h3>
         <br />
-        The page will autoload until you close this window.
-      </h5>
-      <a href="" style={{ color: '#ff6600', textDecorationStyle: "underline", textDecorationColor: "#ff6600" }} onClick={hanldeLink}>
-        <h3 className="text-center" style={{ color: "#ff4500", textDecorationColor: "#ff4400", textDecorationStyle: "underline", cursor: "pointer" }}>
-          Start Autoload to Fetch All
-        </h3>
-      </a>
-      <br />
-      <br />
-      <h5 className="text-center">List of All Domains</h5>
 
-      <table className="table table-bordered">
-        <thead className="thead-light">
-          <tr>
-            <th
-              onClick={() => requestSort("id")}
-              style={{
-                cursor: "pointer", backgroundColor: "#cdd7dc",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              Domain
-            </th>
-            <th
-              onClick={() => requestSort("name")}
-              style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
-            >
-              Unique <br />
-              Target
-              <br /> URLs
-            </th>
-            <th
-              onClick={() => requestSort("age")}
-              style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
-            >
-              Prompts <br />
-              Fetched
-            </th>
-            <th
-              onClick={() => requestSort("age")}
-              style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
-            >
-              Prompts To
+        {paginatedData.length === 0 && !isFetched && (
+          <div className="alert alert-primary" role="alert">
+            Loading...
+          </div>
+        )}
+
+        {
+          paginatedData && paginatedData.length !== 0 && isFetched ?
+            <>
+              <h5 className="text-center" style={{ color: "#ff3300", fontSize: "16px", marginBottom: "1.5rem" }}>
+                There are {promptsNum > 0 ? promptsNum : 'no'} prompts left to be fetched.
+                <br />
+                The page will autoload until you close this window.
+              </h5>
+              <a href="" style={{ color: '#ff6600', textDecorationStyle: "underline", textDecorationColor: "#ff6600" }} onClick={hanldeLink}>
+                <h3 className="text-center" style={{ color: "#ff4500", textDecorationColor: "#ff4400", textDecorationStyle: "underline", cursor: "pointer" }}>
+                  Start Autoload to Fetch All
+                </h3>
+              </a>
               <br />
-              Be Fetched
-            </th>
-            <th
-              onClick={() => requestSort("age")}
-              style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
-            >
-              Exported
-            </th>
-            <th
-              onClick={() => requestSort("age")}
-              style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
-            >
-              List <br />
-              Target URLs
-            </th>
-            <th
-              onClick={() => requestSort("age")}
-              style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
-            >
-              Export <br />
-              All
-            </th>
-            <th
-              onClick={() => requestSort("age")}
-              style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
-            >
-              Remove <br />
-              All
-            </th>
-            <th
-              onClick={() => requestSort("age")}
-              style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
-            >
-              {" "}
-              Queue
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {paginatedData.map((user) => (
-            <tr key={Math.random()}>
-              <td>{user.domain}</td>
-              <td>{user.unique_target_urls}</td>
-              <td>{user.prompts_fetched}</td>
-              <td>{user.prompts_tobe_fetched}</td>
-              <td>{user.exported_count}</td>
-              <td style={{ color: "#ff4500" }}>[List]</td>
-              <td style={{ color: "#ff4500" }}>[Export]</td>
-              <td style={{ color: "#ff4500" }}>[Remove]</td>
-              <td style={{ color: "#ff4500" }}>[MoveUp]</td>
+              <br />
+              <h5 className="text-center">List of All Domains</h5>
 
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="d-flex justify-content-between">
-        <button
-          className="btn btn-secondary"
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <span>
-          {" "}
-          Page {currentPage} of {totalPages}{" "}
-        </span>
-        <button
-          className="btn btn-secondary"
-          onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-          }
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
+              <table className="table table-bordered">
+                <thead className="thead-light">
+                  <tr>
+                    <th
+                      onClick={() => requestSort("id")}
+                      style={{
+                        cursor: "pointer", backgroundColor: "#cdd7dc",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      Domain
+                    </th>
+                    <th
+                      onClick={() => requestSort("name")}
+                      style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
+                    >
+                      Unique <br />
+                      Target
+                      <br /> URLs
+                    </th>
+                    <th
+                      onClick={() => requestSort("age")}
+                      style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
+                    >
+                      Prompts <br />
+                      Fetched
+                    </th>
+                    <th
+                      onClick={() => requestSort("age")}
+                      style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
+                    >
+                      Prompts To
+                      <br />
+                      Be Fetched
+                    </th>
+                    <th
+                      onClick={() => requestSort("age")}
+                      style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
+                    >
+                      Exported
+                    </th>
+                    <th
+                      onClick={() => requestSort("age")}
+                      style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
+                    >
+                      List <br />
+                      Target URLs
+                    </th>
+                    <th
+                      onClick={() => requestSort("age")}
+                      style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
+                    >
+                      Export <br />
+                      All
+                    </th>
+                    <th
+                      onClick={() => requestSort("age")}
+                      style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
+                    >
+                      Remove <br />
+                      All
+                    </th>
+                    <th
+                      onClick={() => requestSort("age")}
+                      style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
+                    >
+                      {" "}
+                      Queue
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {paginatedData.map((user) => (
+                    <tr key={Math.random()}>
+                      <td>{user.domain}</td>
+                      <td>{user.unique_target_urls}</td>
+                      <td>{user.prompts_fetched}</td>
+                      <td>{user.prompts_tobe_fetched}</td>
+                      <td>{user.exported_count}</td>
+                      <td style={{ color: "#ff4500" }}>[List]</td>
+                      <td style={{ color: "#ff4500" }}>[Export]</td>
+                      <td style={{ color: "#ff4500" }}>[Remove]</td>
+                      <td style={{ color: "#ff4500" }}>[MoveUp]</td>
+
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div className="d-flex justify-content-between">
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                >
+                  Previous
+                </button>
+                <span>
+                  {" "}
+                  Page {currentPage} of {totalPages}{" "}
+                </span>
+                <button
+                  className="btn btn-secondary"
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                  }
+                  disabled={currentPage === totalPages}
+                >
+                  Next
+                </button>
+              </div>
+
+            </>
+            :
+            <>
+              {isFetched ?
+                <div className="alert alert-primary" role="alert">
+                  No Data
+                </div>
+                :
+                null
+              }
+            </>
+        }
       </div>
-    </div>
+    </>
   );
 };
 

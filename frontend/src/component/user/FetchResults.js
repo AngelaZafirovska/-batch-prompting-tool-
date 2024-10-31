@@ -17,7 +17,6 @@ const FetchResult = () => {
 
         const data = await fetchResults(paramData);
         setResults(data);
-
         setIsFetched(true);
       };
       getResults();
@@ -52,10 +51,10 @@ const FetchResult = () => {
         break;
     }
   };
-  
+
   return (
-    <div className="fetch-results mt-5 text-cneter col-md-8" style={{ margin: "auto" }}>      
-      <div className="row">
+    <>
+      <div className="container step-container">
         <ul id="progressbar">
           <li onClick={() => handleStep(1)} id="form"><strong>Form</strong></li>
           <li onClick={() => handleStep(2)} id="template"><strong>Template ManagementTool</strong></li>
@@ -63,37 +62,50 @@ const FetchResult = () => {
           <li onClick={() => handleStep(4)} className="active" id="fetchresult"><strong>Fetch Result</strong></li>
         </ul>
       </div>
+      <div className="fetch-results text-cneter col-md-8" style={{ margin: "auto" }}>
+        <h2 className="text-center title">OpenAI API FAQ Prompts</h2>
+        <h5 className="text-center mb-4" style={{ color: "#ff4500" }}>Note: Each gpt-4 API call can take up to 30 seconds.</h5>
 
-      <h2 className="text-center mb-4 mt-4">OpenAI API FAQ Prompts</h2>
-      <h5 className="text-center mb-4" style={{ color: "#ff4500" }}>Note: Each gpt-4 API call can take up to 30 seconds.</h5>
-
-      {
-        isFetched ?
-          <>
-            <p className="text-center">Content for {results.prompts?.template_data?.content_url}
-              <br />
-              Target URL: {results.prompts?.template_data?.target_url}
-            </p>
-            <div className="text-center mt-5 mb-5" style={{ height: "1px", background: "#bbbbbb" }}></div>
-
-            <div className="faqItem py-4">
-              {handleContent(results.prompts?.content)}
-            </div>
-            <div className="text-center" style={{ height: "1px", background: "#bbbbbb", marginBottom: "50px" }}></div>
-            <div className="text-center" style={{ color: "#ff4400" }}>
-              {
-                results.toBeFetched > 0 ? `There are ${results.toBeFetched} Prompts left to be fetched.` : ""
-              }
-              <br />
-              The page will autoload until you close this window.
-            </div>
-          </>
-          :
+        {!isFetched && (
           <div className="alert alert-primary" role="alert">
-            No data
+            Loading...
           </div>
-      }
-    </div>
+        )}
+
+        {
+          isFetched && results?.prompts ?
+            <>
+              <p className="text-center">Content for {results.prompts?.template_data?.content_url}
+                <br />
+                Target URL: {results.prompts?.template_data?.target_url}
+              </p>
+              <div className="text-center mt-5 mb-5" style={{ height: "1px", background: "#bbbbbb" }}></div>
+
+              <div className="faqItem py-4">
+                {handleContent(results.prompts?.content)}
+              </div>
+              <div className="text-center" style={{ height: "1px", background: "#bbbbbb", marginBottom: "50px" }}></div>
+              <div className="text-center" style={{ color: "#ff4400" }}>
+                {
+                  results.toBeFetched > 0 ? `There are ${results.toBeFetched} Prompts left to be fetched.` : ""
+                }
+                <br />
+                The page will autoload until you close this window.
+              </div>
+            </>
+            :
+            <>
+              {isFetched ?
+                <div className="alert alert-primary" role="alert">
+                  No Data
+                </div>
+                :
+                null
+              }
+            </>
+        }
+      </div>
+    </>
   );
 };
 

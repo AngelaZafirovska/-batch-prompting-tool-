@@ -129,8 +129,8 @@ const PromptForm = () => {
     // }
   };
 
-  
-  const handleRadioChange = (value) =>{
+
+  const handleRadioChange = (value) => {
     setSelectedOption(value)
   }
 
@@ -155,8 +155,8 @@ const PromptForm = () => {
   };
 
   return (
-    <div className="container prompt-form mt-5" >
-      <div className="row">
+    <>
+      <div className="container step-container">
         <ul id="progressbar">
           <li onClick={() => handleStep(1)} className="active" id="form"><strong>Form</strong></li>
           <li onClick={() => handleStep(2)} id="template"><strong>Template ManagementTool</strong></li>
@@ -164,192 +164,194 @@ const PromptForm = () => {
           <li onClick={() => handleStep(4)} id="fetchresult"><strong>Fetch Result</strong></li>
         </ul>
       </div>
-      <h2 className="text-center mb-10 ml-10 title">Type Your URLs and Keywords</h2>
-      <div className="row">
-        <div className="col-md-2"></div>
-        <div className="col-md-8">
-          <form className="card p-4 shadow">
-            <div className="mb-3 row">
-              <div className="col-md-3">
-                <label className="form-label">open AI secret key (required)</label>
-              </div>
-              <div className="col-md-8">
-                <input
-                  className="form-control"
-                  type="text"
-                  name="apiKey"
-                  placeholder="Enter ApiKey"
-                  value={formData.apiKey}
-                  onChange={handleChange}
-                />
-                {errors.apiKey && <span style={{ color: 'red' }}>{errors.apiKey}</span>}
-              </div>
-            </div>
-            <div className="mb-3 row">
-              <div className="col-md-3">
-                <label className="form-label">Fixed Seed 1:</label>
-              </div>
-              <div className="col-md-8">
-                <input
-                  className="form-control"
-                  type="text"
-                  name="fs1"
-                  placeholder="Enter [FS1]"
-                  value={formData.fs1}
-                  onChange={handleChange}
-                />
-                {errors.fs1 && <span style={{ color: 'red' }}>{errors.fs1}</span>}
-              </div>
-            </div>
-            <div className="mb-3 row">
-              <div className="col-md-3">
-                <label className="form-label">Fixed Seed 2 (Optional):</label>
-              </div>
-              <div className="col-md-8">
-                <input
-                  className="form-control"
-                  type="text"
-                  name="fs2"
-                  placeholder="Enter [FS2]"
-                  value={formData.fs2}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="mb-3 row">
-              <div className="col-md-3">
-                <label className="form-label">Target URL:</label>
-              </div>
-              <div className="col-md-8">
-                <textarea
-                  rows="3"
-                  className="form-control"
-                  type="text"
-                  name="vs1"
-                  placeholder="Enter [VS1]"
-                  value={formData.vs1}
-                  onChange={handleChange}
-                />
-                {errors.vs1 && <span style={{ color: 'red' }}>{errors.vs1}</span>}
-              </div>
-            </div>
-            <div className="mb-3 row">
-              <div className="col-md-3">
-                <label className="form-label">Anchor Text:</label><br />
-                <label className="form-label">(One per line)</label>
-              </div>
-              <div className="col-md-8">
-                <textarea
-                  rows="5"
-                  className="form-control"
-                  type="text"
-                  name="vs2"
-                  placeholder="Enter [VS2]"
-                  value={formData.vs2}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="mb-3 row">
-              <div className="col-md-3">
-                <label className="form-label">Power Page URLs:</label><br />
-                <label className="form-label">(One per line)</label>
-              </div>
-              <div className="col-md-8">
-                <textarea
-                  rows="5"
-                  className="form-control"
-                  type="text"
-                  name="vs3"
-                  placeholder="Enter [VS3]"
-                  value={formData.vs3}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="mb-3 row">
-              <div className="col-md-3">
-                <label className="form-label">Prompt Note:</label>
-              </div>
-              <div className="col-md-8">
-                <textarea
-                  rows="5"
-                  className="form-control"
-                  type="text"
-                  name="promptNote"
-                  placeholder="Enter Prompt Note"
-                  value={formData.promptNote}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="mb-3 row">
-              <div className="col-md-3">
-                <label className="form-label">Prompt Text:</label>
-              </div>
-              <div className="col-md-8">
-                <textarea
-                  rows="5"
-                  className="form-control"
-                  type="text"
-                  name="promptText"
-                  placeholder="Enter Prompt Text"
-                  value={formData.promptText}
-                  onChange={handleChange}
-                />
-                {errors.promptText && <span style={{ color: 'red' }}>{errors.promptText}</span>}
-              </div>
-            </div>
-            <div className="mb-3 row">
-              <div className="col-md-3">
-                <label className="form-label">Template Name (Optional):</label><br />
-                <label className="form-label" style={{ fontSize: "14px" }}>Add a name to save the prompt as a template.</label>
-              </div>
-              <div className="col-md-8">
-                <input
-                  className="form-control"
-                  type="text"
-                  name="templateName"
-                  value={formData.templateName}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="mb-3 row">
-              <div className="col-md-3">
-                <label className="form-label" style={{ fontSize: "14px" }}>Create AI Prompt Queues:</label>
-              </div>
-              <div className="col-md-8">
-                <div >
-                  <label style={{ marginRight: "10px" }}>
-                    <input
-                      type="radio"
-                      value="option1"
-                      name="promptNote"
-                      checked={selectedOption === "yes"}
-                      onChange={() => handleRadioChange("yes")}
-                    />
-                    y
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      value="option2"
-                      name="promptNote"
-                      checked={selectedOption === "no"}
-                      onChange={() => handleRadioChange("no")}
-                    />
-                    n
-                  </label>
+      <div className="container prompt-form" >
+        <h2 className="text-center mb-10 ml-10 title">Type Your URLs and Keywords</h2>
+        <div className="row">
+          <div className="col-md-2"></div>
+          <div className="col-md-8">
+            <form className="card p-4 shadow">
+              <div className="mb-3 row">
+                <div className="col-md-3">
+                  <label className="form-label">open AI secret key (required)</label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    className="form-control"
+                    type="text"
+                    name="apiKey"
+                    placeholder="Enter ApiKey"
+                    value={formData.apiKey}
+                    onChange={handleChange}
+                  />
+                  {errors.apiKey && <span style={{ color: 'red' }}>{errors.apiKey}</span>}
                 </div>
               </div>
-            </div>
-            <button onClick={handleNext} className="btn btn-primary w-100">Process</button>
-          </form>
+              <div className="mb-3 row">
+                <div className="col-md-3">
+                  <label className="form-label">Fixed Seed 1:</label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    className="form-control"
+                    type="text"
+                    name="fs1"
+                    placeholder="Enter [FS1]"
+                    value={formData.fs1}
+                    onChange={handleChange}
+                  />
+                  {errors.fs1 && <span style={{ color: 'red' }}>{errors.fs1}</span>}
+                </div>
+              </div>
+              <div className="mb-3 row">
+                <div className="col-md-3">
+                  <label className="form-label">Fixed Seed 2 (Optional):</label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    className="form-control"
+                    type="text"
+                    name="fs2"
+                    placeholder="Enter [FS2]"
+                    value={formData.fs2}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div className="mb-3 row">
+                <div className="col-md-3">
+                  <label className="form-label">Target URL:</label>
+                </div>
+                <div className="col-md-8">
+                  <textarea
+                    rows="3"
+                    className="form-control"
+                    type="text"
+                    name="vs1"
+                    placeholder="Enter [VS1]"
+                    value={formData.vs1}
+                    onChange={handleChange}
+                  />
+                  {errors.vs1 && <span style={{ color: 'red' }}>{errors.vs1}</span>}
+                </div>
+              </div>
+              <div className="mb-3 row">
+                <div className="col-md-3">
+                  <label className="form-label">Anchor Text:</label><br />
+                  <label className="form-label">(One per line)</label>
+                </div>
+                <div className="col-md-8">
+                  <textarea
+                    rows="5"
+                    className="form-control"
+                    type="text"
+                    name="vs2"
+                    placeholder="Enter [VS2]"
+                    value={formData.vs2}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div className="mb-3 row">
+                <div className="col-md-3">
+                  <label className="form-label">Power Page URLs:</label><br />
+                  <label className="form-label">(One per line)</label>
+                </div>
+                <div className="col-md-8">
+                  <textarea
+                    rows="5"
+                    className="form-control"
+                    type="text"
+                    name="vs3"
+                    placeholder="Enter [VS3]"
+                    value={formData.vs3}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div className="mb-3 row">
+                <div className="col-md-3">
+                  <label className="form-label">Prompt Note:</label>
+                </div>
+                <div className="col-md-8">
+                  <textarea
+                    rows="5"
+                    className="form-control"
+                    type="text"
+                    name="promptNote"
+                    placeholder="Enter Prompt Note"
+                    value={formData.promptNote}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div className="mb-3 row">
+                <div className="col-md-3">
+                  <label className="form-label">Prompt Text:</label>
+                </div>
+                <div className="col-md-8">
+                  <textarea
+                    rows="5"
+                    className="form-control"
+                    type="text"
+                    name="promptText"
+                    placeholder="Enter Prompt Text"
+                    value={formData.promptText}
+                    onChange={handleChange}
+                  />
+                  {errors.promptText && <span style={{ color: 'red' }}>{errors.promptText}</span>}
+                </div>
+              </div>
+              <div className="mb-3 row">
+                <div className="col-md-3">
+                  <label className="form-label">Template Name (Optional):</label><br />
+                  <label className="form-label" style={{ fontSize: "14px" }}>Add a name to save the prompt as a template.</label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    className="form-control"
+                    type="text"
+                    name="templateName"
+                    value={formData.templateName}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div className="mb-3 row">
+                <div className="col-md-3">
+                  <label className="form-label" style={{ fontSize: "14px" }}>Create AI Prompt Queues:</label>
+                </div>
+                <div className="col-md-8">
+                  <div >
+                    <label style={{ marginRight: "10px" }}>
+                      <input
+                        type="radio"
+                        value="option1"
+                        name="promptNote"
+                        checked={selectedOption === "yes"}
+                        onChange={() => handleRadioChange("yes")}
+                      />
+                      y
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        value="option2"
+                        name="promptNote"
+                        checked={selectedOption === "no"}
+                        onChange={() => handleRadioChange("no")}
+                      />
+                      n
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <button onClick={handleNext} className="btn btn-primary w-100">Process</button>
+            </form>
+          </div>
+          <div className="col-md-2"></div>
         </div>
-        <div className="col-md-2"></div>
       </div>
-    </div>
+    </>
   );
 };
 

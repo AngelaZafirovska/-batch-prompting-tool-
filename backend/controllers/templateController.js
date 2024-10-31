@@ -80,9 +80,6 @@ const generateTemplateResponse = async (req, res) => {
     const noteInstance = noteOptional.replaceAll("[TARGET URL]", instance_urls)
 
     if (vs2Keywords.length > 0) {
-      // Initialize template collection
-      await Template.deleteMany({ user_id: userId });
-      await Prompt.deleteMany({ user_id: userId });
 
       for (const vs2Keyword of vs2Keywords) {
         if (vs3Keywords.length > 0) {

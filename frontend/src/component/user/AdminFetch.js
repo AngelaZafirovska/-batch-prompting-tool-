@@ -135,8 +135,8 @@ const AdminFetch = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row">
+    <>
+      <div className="container step-container">
         <ul id="progressbar">
           <li onClick={() => handleStep(1)} id="form"><strong>Form</strong></li>
           <li onClick={() => handleStep(2)} className="active" id="template"><strong>Template ManagementTool</strong></li>
@@ -144,104 +144,124 @@ const AdminFetch = () => {
           <li onClick={() => handleStep(4)} id="fetchresult"><strong>Fetch Result</strong></li>
         </ul>
       </div>
+      <div className="container">
+        <h2 className="text-center title">OpenAI API FAQ Templates</h2>
+        <br />
 
-      {
-        loading &&
-        <div className="alert alert-primary" role="alert">
-          Now template load processing...
-        </div>
-      }
-      {paginatedData.length === 0 && !isFetched && (
-        <div className="alert alert-primary" role="alert">
-          No data
-        </div>
-      )}
+        {
+          loading &&
+          <div className="alert alert-primary" role="alert">
+            Now template load processing...
+          </div>
+        }
+        {paginatedData.length === 0 && !isFetched && (
+          <div className="alert alert-primary" role="alert">
+            Loading...
+          </div>
+        )}
 
-      <div className="row mt-5">
-        <input
-          type="text"
-          className="form-control mb-3"
-          placeholder="Filter by name..."
-          value={filterText}
-          onChange={(e) => setFilterText(e.target.value)}
-        />
-        <table className="table table-bordered">
-          <thead className="thead-light">
-            <tr>
-              <th onClick={() => requestSort("id")} style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}>
-                No
-              </th>
-              <th
-                onClick={() => requestSort("name")}
-                style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
-              >
-                Date
-              </th>
-              <th
-                onClick={() => requestSort("age")}
-                style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
-              >
-                Delete
-              </th>
-              <th
-                onClick={() => requestSort("age")}
-                style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
-              >
-                Move Up
-              </th>
-              <th
-                onClick={() => requestSort("age")}
-                style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
-              >
-                Load
-              </th>
-              <th
-                onClick={() => requestSort("age")}
-                style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
-              >
-                Template
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              paginatedData.map((data) => (
-                <tr key={data.no}>
-                  <td>{data.no}</td>
-                  <td>{data.date}</td>
-                  <td style={{ color: "#ff3300" }}>[delete]</td>
-                  <td style={{ color: "#ff3300" }}>[move up]</td>
-                  <td style={{ color: "#ff3300", cursor: "pointer" }} onClick={() => handleLoad(data.templateId)}>[load]</td>
-                  <td>{data.templateName}</td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-        <div className="d-flex justify-content-between">
-          <button
-            className="btn btn-secondary"
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </button>
-          <span>
-            {" "}
-            Page {currentPage} of {totalPages}{" "}
-          </span>
-          <button
-            className="btn btn-secondary"
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
-        </div>
+        {
+          paginatedData && paginatedData.length !== 0 && isFetched ?
+            <>
+              <div className="row mt-5">
+                <input
+                  type="text"
+                  className="form-control mb-3"
+                  placeholder="Filter by name..."
+                  value={filterText}
+                  onChange={(e) => setFilterText(e.target.value)}
+                />
+                <table className="table table-bordered">
+                  <thead className="thead-light">
+                    <tr>
+                      <th onClick={() => requestSort("id")} style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}>
+                        No
+                      </th>
+                      <th
+                        onClick={() => requestSort("name")}
+                        style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
+                      >
+                        Date
+                      </th>
+                      <th
+                        onClick={() => requestSort("age")}
+                        style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
+                      >
+                        Delete
+                      </th>
+                      <th
+                        onClick={() => requestSort("age")}
+                        style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
+                      >
+                        Move Up
+                      </th>
+                      <th
+                        onClick={() => requestSort("age")}
+                        style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
+                      >
+                        Load
+                      </th>
+                      <th
+                        onClick={() => requestSort("age")}
+                        style={{ cursor: "pointer", backgroundColor: "#cdd7dc" }}
+                      >
+                        Template
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      paginatedData.map((data) => (
+                        <tr key={data.no}>
+                          <td>{data.no}</td>
+                          <td>{data.date}</td>
+                          <td style={{ color: "#ff3300" }}>[delete]</td>
+                          <td style={{ color: "#ff3300" }}>[move up]</td>
+                          <td style={{ color: "#ff3300", cursor: "pointer" }} onClick={() => handleLoad(data.templateId)}>[load]</td>
+                          <td>{data.templateName}</td>
+                        </tr>
+                      ))
+                    }
+                  </tbody>
+                </table>
+                <div className="d-flex justify-content-between">
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                  >
+                    Previous
+                  </button>
+                  <span>
+                    {" "}
+                    Page {currentPage} of {totalPages}{" "}
+                  </span>
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                    }
+                    disabled={currentPage === totalPages}
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            </>
+            :
+            <>
+              {isFetched ?
+                <div className="alert alert-primary" role="alert">
+                  No Data
+                </div>
+                :
+                null
+              }
+            </>
+        }
+
       </div>
-    </div>
+    </>
   );
 };
 
