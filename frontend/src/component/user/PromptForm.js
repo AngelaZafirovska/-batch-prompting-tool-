@@ -21,7 +21,7 @@ const PromptForm = () => {
         try {
           const res = await getFormData(fetchParams);
           if (res) {
-            setFormData(res.form || []);
+            setFormData(res.form || { apiKey: '', fs1: '', fs2: '', vs1: '', vs2: '', vs3: '', promptNote: '', promptText: '', templateName: '' });
           }
         } catch (error) {
           console.error(error);
@@ -128,12 +128,40 @@ const PromptForm = () => {
     // }
   };
 
+  const handleStep = (step) => {
+    switch (step) {
+      case 1:
+        history.push("/user");
+        break;
+      case 2:
+        history.push("/user/AdminFetch");
+        break;
+      case 3:
+        history.push("/user/ManagementWindow");
+        break;
+      case 4:
+        history.push("/user/FetchResult");
+        break;
+      default:
+        break;
+    }
+    // Navigate back to Page1
+  };
+
   return (
-    <div className="prompt-form mt-5" style={{ padding: '12px' }}  >
+    <div className="container prompt-form mt-5" >
+      <div className="row">
+        <ul id="progressbar">
+          <li onClick={() => handleStep(1)} className="active" id="form"><strong>Form</strong></li>
+          <li onClick={() => handleStep(2)} id="template"><strong>Template ManagementTool</strong></li>
+          <li onClick={() => handleStep(3)} id="prompt"><strong>Prompts</strong></li>
+          <li onClick={() => handleStep(4)} id="fetchresult"><strong>Fetch Result</strong></li>
+        </ul>
+      </div>
       <h2 className="text-center mb-10 ml-10">Submit Your URLs and Keywords</h2>
       <div className="row">
-        <div className="col-md-3"></div>
-        <div className="col-md-6">
+        <div className="col-md-2"></div>
+        <div className="col-md-8">
           <form className="card p-4 shadow">
             <div className="mb-3 row">
               <div className="col-md-6">
@@ -153,7 +181,7 @@ const PromptForm = () => {
             </div>
             <div className="mb-3 row">
               <div className="col-md-6">
-                <label className="form-label">Fixed Seed 1</label>
+                <label className="form-label">Fixed Seed 1:</label>
               </div>
               <div className="col-md-6">
                 <input
@@ -169,7 +197,7 @@ const PromptForm = () => {
             </div>
             <div className="mb-3 row">
               <div className="col-md-6">
-                <label className="form-label">Fixed Seed 2 (Optional)</label>
+                <label className="form-label">Fixed Seed 2 (Optional):</label>
               </div>
               <div className="col-md-6">
                 <input
@@ -232,7 +260,7 @@ const PromptForm = () => {
             </div>
             <div className="mb-3 row">
               <div className="col-md-6">
-                <label className="form-label">Prompt Note</label>
+                <label className="form-label">Prompt Note:</label>
               </div>
               <div className="col-md-6">
                 <textarea
@@ -247,7 +275,7 @@ const PromptForm = () => {
             </div>
             <div className="mb-3 row">
               <div className="col-md-6">
-                <label className="form-label">Prompt Text</label>
+                <label className="form-label">Prompt Text:</label>
               </div>
               <div className="col-md-6">
                 <textarea
@@ -279,7 +307,7 @@ const PromptForm = () => {
             <button onClick={handleNext} className="btn btn-primary w-100">Process</button>
           </form>
         </div>
-        <div className="col-md-3"></div>
+        <div className="col-md-2"></div>
       </div>
     </div>
   );

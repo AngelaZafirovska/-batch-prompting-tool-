@@ -115,20 +115,34 @@ const AdminFetch = () => {
     }).catch((err) => { setLoading(false) })
   }
 
+  const handleStep = (step) => {
+    switch (step) {
+      case 1:
+        history.push("/user");
+        break;
+      case 2:
+        history.push("/user/AdminFetch");
+        break;
+      case 3:
+        history.push("/user/ManagementWindow");
+        break;
+      case 4:
+        history.push("/user/FetchResult");
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <div className="container mt-5">
-      <div className="row" style={{ marginBottom: "25px" }}>
-        <div className="col-md-1">
-          <button className="form-control" onClick={handleBack}>
-            Back
-          </button>
-        </div>
-        <div className="offset-md-10 col-md-1">
-          <button className="form-control" onClick={handleNext}>
-            Next
-          </button>
-        </div>
+      <div className="row">
+        <ul id="progressbar">
+          <li onClick={() => handleStep(1)} id="form"><strong>Form</strong></li>
+          <li onClick={() => handleStep(2)} className="active" id="template"><strong>Template ManagementTool</strong></li>
+          <li onClick={() => handleStep(3)} id="prompt"><strong>Prompts</strong></li>
+          <li onClick={() => handleStep(4)} id="fetchresult"><strong>Fetch Result</strong></li>
+        </ul>
       </div>
 
       {

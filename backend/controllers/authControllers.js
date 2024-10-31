@@ -2,6 +2,7 @@ const User = require("../models/user");
 const shortId = require("shortid");
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
+const Form = require("../models/form");
 
 // user signup
 exports.signup = (req, res) => {
@@ -49,6 +50,9 @@ exports.signin = (req, res) => {
         error: "Email and password do not match.",
       });
     }
+
+    // Delete existing form data
+    Form.deleteMany({ userId: user._id }).then(res => console.log(res));
 
     // generate a token and send to client
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {

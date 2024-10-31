@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { fetchResults } from "../../action/promptAction";
 import { isAuth } from "../../action/authAction";
+import { useHistory } from "react-router-dom";
 
 
 const FetchResult = () => {
   const [results, setResults] = useState([]);
   const [isFetched, setIsFetched] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     if (!isFetched) {
@@ -32,8 +34,36 @@ const FetchResult = () => {
     }
   }
 
+  const handleStep = (step) => {
+    switch (step) {
+      case 1:
+        history.push("/user");
+        break;
+      case 2:
+        history.push("/user/AdminFetch");
+        break;
+      case 3:
+        history.push("/user/ManagementWindow");
+        break;
+      case 4:
+        history.push("/user/FetchResult");
+        break;
+      default:
+        break;
+    }
+  };
+  
   return (
-    <div className="fetch-results mt-5 text-cneter col-md-8" style={{ margin: "auto" }}>
+    <div className="fetch-results mt-5 text-cneter col-md-8" style={{ margin: "auto" }}>      
+      <div className="row">
+        <ul id="progressbar">
+          <li onClick={() => handleStep(1)} id="form"><strong>Form</strong></li>
+          <li onClick={() => handleStep(2)} id="template"><strong>Template ManagementTool</strong></li>
+          <li onClick={() => handleStep(3)} id="prompt"><strong>Prompts</strong></li>
+          <li onClick={() => handleStep(4)} className="active" id="fetchresult"><strong>Fetch Result</strong></li>
+        </ul>
+      </div>
+
       <h2 className="text-center mb-4">OpenAI API FAQ Prompts</h2>
       <h5 className="text-center mb-4" style={{ color: "#ff4500" }}>Note: Each gpt-4 API call can take up to 30 seconds.</h5>
 

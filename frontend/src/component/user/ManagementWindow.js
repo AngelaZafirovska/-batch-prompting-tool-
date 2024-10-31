@@ -14,7 +14,7 @@ const ManagementWindow = () => {
   const history = useHistory();
   const [data, setData] = useState([]);
   const [promptsNum, setPromptsNum] = useState(0)
-  const [isFetched, setIsFetched] = useState(false); 
+  const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
     if (!isFetched) {
@@ -93,20 +93,36 @@ const ManagementWindow = () => {
     setSortConfig({ key, direction });
   };
 
-  const handleBack = () => {
-    history.push("/user/AdminFetch"); // Navigate back to Page1
+  const handleStep = (step) => {
+    switch (step) {
+      case 1:
+        history.push("/user");
+        break;
+      case 2:
+        history.push("/user/AdminFetch");
+        break;
+      case 3:
+        history.push("/user/ManagementWindow");
+        break;
+      case 4:
+        history.push("/user/FetchResult");
+        break;
+      default:
+        break;
+    }
   };
 
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
 
   return (
     <div className="container mt-5">
-      <div className="row" style={{ marginBottom: "25px" }}>
-        <div className="col-md-1">
-          <button className="form-control" onClick={handleBack}>
-            Back
-          </button>
-        </div>
+      <div className="row">
+        <ul id="progressbar">
+          <li onClick={() => handleStep(1)} id="form"><strong>Form</strong></li>
+          <li onClick={() => handleStep(2)} id="template"><strong>Template ManagementTool</strong></li>
+          <li onClick={() => handleStep(3)} className="active" id="prompt"><strong>Prompts</strong></li>
+          <li onClick={() => handleStep(4)} id="fetchresult"><strong>Fetch Result</strong></li>
+        </ul>
       </div>
       <h3 className="text-center">OpenAI API FAQ Prompts</h3>
       <br />
@@ -118,7 +134,7 @@ const ManagementWindow = () => {
       )}
 
       <h5 className="text-center" style={{ color: "#ff3300", fontSize: "16px", marginBottom: "1.5rem" }}>
-        There are {promptsNum} prompts left to be fetched.
+        There are {promptsNum > 0 ? promptsNum : 'no'} prompts left to be fetched.
         <br />
         The page will autoload until you close this window.
       </h5>

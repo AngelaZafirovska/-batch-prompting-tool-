@@ -5,6 +5,15 @@ const Form = require("../models/form");
 const Template = require("../models/template"); // Import your Template model
 const { splitArrayIntoChunks, getDomain } = require('../utils');
 
+/**
+ * Generate template
+ * @param {*} req 
+ * @param {*} res 
+ * 
+ * [VS1] => [TARGET URL]
+ * [VS2] => [ANCHOR]
+ * [VS3] => [URL]
+ */
 const generateTemplateResponse = async (req, res) => {
   const formData = req.body;
 
@@ -63,12 +72,12 @@ const generateTemplateResponse = async (req, res) => {
     // Replace needed brackets in prompt text
     const seedText = prompt_text.replaceAll("[FS1]", seed_content_required)
     const seedOptional = seedText.replaceAll("[FS2]", seed_content_optional)
-    const promptInstance = seedOptional.replaceAll("[VS1]", instance_urls)
+    const promptInstance = seedOptional.replaceAll("[TARGET URL]", instance_urls)
 
     // Replace needed brackets in prompt note
     const noteSeed = prompt_note.replaceAll("[FS1]", seed_content_required)
     const noteOptional = noteSeed.replaceAll("[FS2]", seed_content_optional)
-    const noteInstance = noteOptional.replaceAll("[VS1]", instance_urls)
+    const noteInstance = noteOptional.replaceAll("[TARGET URL]", instance_urls)
 
     if (vs2Keywords.length > 0) {
       // Initialize template collection
@@ -78,11 +87,11 @@ const generateTemplateResponse = async (req, res) => {
       for (const vs2Keyword of vs2Keywords) {
         if (vs3Keywords.length > 0) {
           for (const vs3Keyword of vs3Keywords) {
-            const noteKeywords = noteInstance.replaceAll("[VS2]", vs2Keyword)
-            const promptNote = noteKeywords.replaceAll("[VS3]", vs3Keyword)
+            const noteKeywords = noteInstance.replaceAll("[ANCHOR]", vs2Keyword)
+            const promptNote = noteKeywords.replaceAll("[URL]", vs3Keyword)
 
-            const promptKeywords = promptInstance.replaceAll("[VS2]", keywords_first)
-            const promptText = promptKeywords.replaceAll("[VS3]", keywords_second)
+            const promptKeywords = promptInstance.replaceAll("[ANCHOR]", keywords_first)
+            const promptText = promptKeywords.replaceAll("[URL]", keywords_second)
 
             instanceUrls.map(async (url) => {
               const domain = getDomain(url);
@@ -107,8 +116,8 @@ const generateTemplateResponse = async (req, res) => {
           }
 
         } else {
-          const promptNote = noteInstance.replaceAll("[VS2]", vs2Keyword)
-          const promptText = promptInstance.replaceAll("[VS2]", vs2Keyword)
+          const promptNote = noteInstance.replaceAll("[ANCHOR]", vs2Keyword)
+          const promptText = promptInstance.replaceAll("[ANCHOR]", vs2Keyword)
 
           instanceUrls.map(async (url) => {
             const domain = getDomain(url);
@@ -168,7 +177,7 @@ const getFormData = async (req, res) => {
   try {
     const form = await Form.findOne({ userId: user_id }).exec();
     if (!form) {
-      return res.status(400).json({
+      return res.status(201).json({
         error: "Form doesn't exist",
       });
     }

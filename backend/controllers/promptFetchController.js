@@ -199,7 +199,7 @@ const fetchResult = async (req, res) => {
 
     // Define a timeout for 10 seconds
     const startTime = Date.now();
-    const timeout = 10000; // 10 seconds in milliseconds
+    let timeout = 15000;
 
     // Function to fetch prompts with templates
     const fetchPrompts = async () => {
