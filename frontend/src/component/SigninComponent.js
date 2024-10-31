@@ -58,7 +58,7 @@ const SigninComponent = ({ history }) => {
   };
 
   const showLaoding = () =>
-    loading ? <div className="alert alert-info">No data</div> : "";
+    loading ? <div className="alert alert-info">Signing you in, please wait...</div> : "";
   const showError = () =>
     error ? <div className="alert alert-danger">{error}</div> : "";
   const showMessage = () =>

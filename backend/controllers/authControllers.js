@@ -1,8 +1,9 @@
 const User = require("../models/user");
-const shortId = require("shortid");
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
 const Form = require("../models/form");
+const Prompt = require("../models/prompt");
+const Template = require("../models/template");
 
 // user signup
 exports.signup = (req, res) => {
@@ -33,41 +34,40 @@ exports.signup = (req, res) => {
 };
 
 // user signin
-exports.signin = (req, res) => {
+exports.signin = async (req, res) => {
   const { email, password } = req.body;
 
   //check if user exist
-  User.findOne({ email }).exec((err, user) => {
-    if (err || !user) {
-      return res.status(201).json({
-        error: "User with that email does not exist. Please signup",
-      });
-    }
+  const user = await User.findOne({ email }).exec();
 
-    // authenticate
-    if (!user.authenticate(password)) {
-      return res.status(201).json({
-        error: "Email and password do not match.",
-      });
-    }
-
-    // Delete existing form data
-    Form.deleteMany({ userId: user._id }).then(res => console.log(res));
-    // Initialize template collection
-    Template.deleteMany({ user_id: user._id }).then(res => console.log(res));
-    Prompt.deleteMany({ user_id: user._id }).then(res => console.log(res));
-
-    // generate a token and send to client
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
+  if (!user) {
+    return res.status(201).json({
+      error: "User with that email does not exist. Please signup",
     });
+  }
 
-    res.cookie("token", token, { expiresIn: "1d" });
-    const { _id, username, name, email, role } = user;
-    return res.json({
-      token,
-      user,
+  // authenticate
+  if (!user.authenticate(password)) {
+    return res.status(201).json({
+      error: "Email and password do not match.",
     });
+  }
+
+  // Delete existing form data
+  await Form.deleteMany({ userId: user._id });
+  // Initialize template collection
+  await Template.deleteMany({ user_id: user._id });
+  await Prompt.deleteMany({ user_id: user._id });
+
+  // generate a token and send to client
+  const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+    expiresIn: "1d",
+  });
+
+  res.cookie("token", token, { expiresIn: "1d" });
+  return res.json({
+    token,
+    user,
   });
 };
 

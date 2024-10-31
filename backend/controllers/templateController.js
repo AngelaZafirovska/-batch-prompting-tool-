@@ -1,8 +1,7 @@
 // server/controllers/templateController.js
 
-const Prompt = require("../models/prompt");
 const Form = require("../models/form");
-const Template = require("../models/template"); // Import your Template model
+const Template = require("../models/template");
 const { splitArrayIntoChunks, getDomain } = require('../utils');
 
 /**
