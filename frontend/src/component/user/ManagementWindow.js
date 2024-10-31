@@ -231,10 +231,10 @@ const ManagementWindow = () => {
                       <td>{user.prompts_fetched}</td>
                       <td>{user.prompts_tobe_fetched}</td>
                       <td>{user.exported_count}</td>
-                      <td style={{ color: "#ff4500" }}>[List]</td>
-                      <td style={{ color: "#ff4500" }}>[Export]</td>
-                      <td style={{ color: "#ff4500" }}>[Remove]</td>
-                      <td style={{ color: "#ff4500" }}>[MoveUp]</td>
+                      <td className="link-title">[List]</td>
+                      <td className="link-title">[Export]</td>
+                      <td className="link-title">[Remove]</td>
+                      <td className="link-title">[MoveUp]</td>
 
                     </tr>
                   ))}

@@ -145,7 +145,7 @@ const AdminFetch = () => {
         </ul>
       </div>
       <div className="container">
-        <h2 className="text-center title">OpenAI API FAQ Templates</h2>
+        <h2 className="text-center title">OpenAI API Templates</h2>
         <br />
 
         {

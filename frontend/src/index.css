@@ -86,6 +86,7 @@ th {
   margin-bottom: 30px;
   overflow: hidden;
   color: lightgrey;
+  padding-left: 0;
 }
 
 #progressbar .active {
@@ -174,4 +175,10 @@ th {
   position: relative;
   display: flex;
   font-size: small;
+}
+
+.link-title {
+  color: #ff4500 !important;
+  text-decoration: underline;
+  cursor: pointer;
 }
