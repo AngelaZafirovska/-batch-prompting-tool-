@@ -76,6 +76,16 @@ const AdminFetch = () => {
     }
   }, [isFetched, paginatedData])
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (data.length === 0) {
+        setIsFetched(false)
+      }
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [data]);
+
   const requestSort = (key) => {
     let direction = "ascending";
     if (
