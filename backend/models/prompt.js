@@ -5,25 +5,34 @@ const mongoose = require('mongoose');
 // Define the schema
 const promptSchema = new mongoose.Schema({
     user_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "User", // Reference to User model, if applicable
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User", // Reference to User model, if applicable
     },
     template_id: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true
+        required: true,
+        ref: "Template",
     },
     content: {
         type: String,
         required: false
     },
+    domain: {
+        type: String,
+        required: true
+    },
+    uniqueTargetUrls: {
+        type: Number,
+        required: true
+    },
     fetched_count: {
-      type: Number,
-      required: false
+        type: Number,
+        required: false
     },
     exported_count: {
-      type: Number,
-      required: false
+        type: Number,
+        required: false
     },
     is_fetched: {
       type: Boolean,

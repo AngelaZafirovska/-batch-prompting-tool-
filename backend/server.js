@@ -22,6 +22,8 @@ mongoose
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000
   })
   .then(() => console.log("DB Connected")).catch = (err) => {
   console.log(err.message);

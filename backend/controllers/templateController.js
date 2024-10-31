@@ -1,5 +1,6 @@
 // server/controllers/templateController.js
 
+const Prompt = require("../models/prompt");
 const Template = require("../models/template"); // Import your Template model
 const { splitArrayIntoChunks, getDomain } = require('../utils');
 
@@ -29,7 +30,7 @@ const generateTemplateResponse = async (req, res) => {
 
     // Get variable keywords
     const keywords = keywords_first && keywords_first
-      .split(/[\n\s]+/) // Use regex to split by newline and space
+      .split(/[\n]+/) // Use regex to split by newline and space
       .filter(url => url.length > 0);
 
     if (keywords.length > maxKeywords) {
@@ -50,7 +51,7 @@ const generateTemplateResponse = async (req, res) => {
     } else {
       vs3Keywords.push(keywords_second)
     }
-
+    
     // Replace needed brackets in prompt text
     const seedText = prompt_text.replaceAll("[FS1]", seed_content_required)
     const seedOptional = seedText.replaceAll("[FS2]", seed_content_optional)
@@ -62,6 +63,10 @@ const generateTemplateResponse = async (req, res) => {
     const noteInstance = noteOptional.replaceAll("[VS1]", instance_urls)
 
     if (vs2Keywords.length > 0) {
+      // Initialize template collection
+      await Template.deleteMany({ user_id: userId });
+      await Prompt.deleteMany({ user_id: userId });
+
       for (const vs2Keyword of vs2Keywords) {
         if (vs3Keywords.length > 0) {
           for (const vs3Keyword of vs3Keywords) {
@@ -73,15 +78,16 @@ const generateTemplateResponse = async (req, res) => {
 
             instanceUrls.map(async (url) => {
               const domain = getDomain(url);
-              const templateName = `${domain} (${template_name})`;
+              const templateName = `${domain} ${template_name ? `(${template_name})` : ""}`;
 
               const newTemplate = new Template({
                 user_id: userId,
                 api_key: apiKey,
+                domain: domain,
                 template_name: templateName,
                 target_url: url,
-                content_url: instance_urls,
-                keyword: `[VS2]: ${vs2Keyword}, [VS3]:${vs3Keyword}`,
+                content_url: vs3Keyword,
+                keyword: vs2Keyword,
                 prompt_text: promptText,
                 prompt_note: promptNote,
                 date: new Date(),
@@ -98,11 +104,12 @@ const generateTemplateResponse = async (req, res) => {
 
           instanceUrls.map(async (url) => {
             const domain = getDomain(url);
-            const templateName = `${domain} (${template_name})`;
+            const templateName = `${domain} ${template_name ? `(${template_name})` : ""}`;
 
             const newTemplate = new Template({
               user_id: userId,
               api_key: apiKey,
+              domain: domain,
               template_name: templateName,
               target_url: url,
               content_url: instance_urls,

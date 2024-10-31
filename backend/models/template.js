@@ -11,6 +11,9 @@ const templateSchema = new mongoose.Schema(
     api_key: {
       type: String,
     },
+    domain: {
+      type: String,
+    },
     template_name: {
       type: String,
     },
