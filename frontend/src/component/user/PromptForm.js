@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
-import { generateTemplate } from "../../action/promptAction";
+import { generateTemplate, getFormData } from "../../action/promptAction";
 import { saveInputData } from "../../store/actions";
 import { isAuth } from "../../action/authAction";
 
@@ -10,6 +10,29 @@ const PromptForm = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({ apiKey: '', fs1: '', fs2: '', vs1: '', vs2: '', vs3: '', promptNote: '', promptText: '', templateName: '' });
   const [errors, setErrors] = useState({ apiKey: '', fs1: '', fs2: '', vs1: '', vs2: '', vs3: '', promptNote: '', promptText: '', templateName: '' });
+  const [isFetched, setIsFetched] = useState(false);
+
+  useEffect(() => {
+    if (!isFetched) {
+      const fetchData = async () => {
+        const userData = isAuth();
+        const fetchParams = { userId: userData._id };
+
+        try {
+          const res = await getFormData(fetchParams);
+          if (res) {
+            setFormData(res.form || []);
+          }
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setIsFetched(true);
+        }
+      };
+
+      fetchData();
+    }
+  }, [isFetched])
 
   const handleChange = (e) => {
     const { name, value } = e.target;

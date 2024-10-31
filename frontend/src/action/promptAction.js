@@ -68,6 +68,22 @@ export const generateTemplate = async (data) => {
   }
 };
 
+export const getFormData = async (data) => {
+  try {
+    const response = await fetch(`${API}/form/fetch`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Fetch results error:", error);
+    return [];
+  }
+};
 
 
 export const fetchResults = async (data) => {

@@ -1,6 +1,7 @@
 // server/controllers/templateController.js
 
 const Prompt = require("../models/prompt");
+const Form = require("../models/form");
 const Template = require("../models/template"); // Import your Template model
 const { splitArrayIntoChunks, getDomain } = require('../utils');
 
@@ -18,6 +19,13 @@ const generateTemplateResponse = async (req, res) => {
     const prompt_note = formData.promptNote;
     const prompt_text = formData.promptText;
     const template_name = formData.templateName;
+
+    // Delete existing form data
+    await Form.deleteMany({ userId });
+    
+    // Insert form data
+    const form = new Form(formData);
+    await form.save();
 
     // Get instance target urls to create template
     const instanceUrls = instance_urls && instance_urls
@@ -51,7 +59,7 @@ const generateTemplateResponse = async (req, res) => {
     } else {
       vs3Keywords.push(keywords_second)
     }
-    
+
     // Replace needed brackets in prompt text
     const seedText = prompt_text.replaceAll("[FS1]", seed_content_required)
     const seedOptional = seedText.replaceAll("[FS2]", seed_content_optional)
@@ -153,4 +161,23 @@ const getTemplates = async (req, res) => {
   }
 }
 
-module.exports = { generateTemplateResponse, getTemplates };
+const getFormData = async (req, res) => {
+  const formData = req.body;
+  const user_id = formData.userId;
+
+  try {
+    const form = await Form.findOne({ userId: user_id }).exec();
+    if (!form) {
+      return res.status(400).json({
+        error: "Form doesn't exist",
+      });
+    }
+
+    return res.json({ form });
+  } catch (error) {
+    console.log("Error with communicating");
+    res.status(500).json({ error: "Error communicating" });
+  }
+}
+
+module.exports = { generateTemplateResponse, getTemplates, getFormData };
