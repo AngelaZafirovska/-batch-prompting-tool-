@@ -124,7 +124,7 @@ const ManagementWindow = () => {
           <li onClick={() => handleStep(4)} id="fetchresult"><strong>Fetch Result</strong></li>
         </ul>
       </div>
-      <h3 className="text-center">OpenAI API FAQ Prompts</h3>
+      <h3 className="text-center mt-4">OpenAI API FAQ Prompts</h3>
       <br />
 
       {paginatedData.length === 0 && !isFetched && (

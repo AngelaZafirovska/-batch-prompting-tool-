@@ -64,7 +64,7 @@ const FetchResult = () => {
         </ul>
       </div>
 
-      <h2 className="text-center mb-4">OpenAI API FAQ Prompts</h2>
+      <h2 className="text-center mb-4 mt-4">OpenAI API FAQ Prompts</h2>
       <h5 className="text-center mb-4" style={{ color: "#ff4500" }}>Note: Each gpt-4 API call can take up to 30 seconds.</h5>
 
       {

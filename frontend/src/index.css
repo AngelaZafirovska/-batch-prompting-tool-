@@ -24,6 +24,10 @@ th {
   background-color: #cdd7dc;
 }
 
+.title {
+  font-size: x-large;
+}
+
 .form-div {
   border-radius: 10px;
   box-shadow: 0px 0px 2px 2px #cecece;
@@ -89,6 +93,12 @@ th {
   width: 25%;
   float: left;
   position: relative;
+  cursor: pointer;
+}
+
+#progressbar li:hover:before,
+#progressbar li:hover:after {
+  background: #f97316;
 }
 
 /*Icons in the ProgressBar*/
@@ -158,5 +168,5 @@ th {
   width: fit-content;
   position: relative;
   display: flex;
-  font-size: medium;
+  font-size: small;
 }

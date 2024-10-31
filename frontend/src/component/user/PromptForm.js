@@ -11,6 +11,7 @@ const PromptForm = () => {
   const [formData, setFormData] = useState({ apiKey: '', fs1: '', fs2: '', vs1: '', vs2: '', vs3: '', promptNote: '', promptText: '', templateName: '' });
   const [errors, setErrors] = useState({ apiKey: '', fs1: '', fs2: '', vs1: '', vs2: '', vs3: '', promptNote: '', promptText: '', templateName: '' });
   const [isFetched, setIsFetched] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('yes');
 
   useEffect(() => {
     if (!isFetched) {
@@ -128,6 +129,11 @@ const PromptForm = () => {
     // }
   };
 
+  
+  const handleRadioChange = (value) =>{
+    setSelectedOption(value)
+  }
+
   const handleStep = (step) => {
     switch (step) {
       case 1:
@@ -158,16 +164,16 @@ const PromptForm = () => {
           <li onClick={() => handleStep(4)} id="fetchresult"><strong>Fetch Result</strong></li>
         </ul>
       </div>
-      <h2 className="text-center mb-10 ml-10">Submit Your URLs and Keywords</h2>
+      <h2 className="text-center mb-10 ml-10 mt-4 title">Type Your URLs and Keywords</h2>
       <div className="row">
         <div className="col-md-2"></div>
         <div className="col-md-8">
           <form className="card p-4 shadow">
             <div className="mb-3 row">
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <label className="form-label">open AI secret key (required)</label>
               </div>
-              <div className="col-md-6">
+              <div className="col-md-8">
                 <input
                   className="form-control"
                   type="text"
@@ -180,10 +186,10 @@ const PromptForm = () => {
               </div>
             </div>
             <div className="mb-3 row">
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <label className="form-label">Fixed Seed 1:</label>
               </div>
-              <div className="col-md-6">
+              <div className="col-md-8">
                 <input
                   className="form-control"
                   type="text"
@@ -196,10 +202,10 @@ const PromptForm = () => {
               </div>
             </div>
             <div className="mb-3 row">
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <label className="form-label">Fixed Seed 2 (Optional):</label>
               </div>
-              <div className="col-md-6">
+              <div className="col-md-8">
                 <input
                   className="form-control"
                   type="text"
@@ -211,11 +217,12 @@ const PromptForm = () => {
               </div>
             </div>
             <div className="mb-3 row">
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <label className="form-label">Target URL:</label>
               </div>
-              <div className="col-md-6">
+              <div className="col-md-8">
                 <textarea
+                  rows="3"
                   className="form-control"
                   type="text"
                   name="vs1"
@@ -227,12 +234,13 @@ const PromptForm = () => {
               </div>
             </div>
             <div className="mb-3 row">
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <label className="form-label">Anchor Text:</label><br />
                 <label className="form-label">(One per line)</label>
               </div>
-              <div className="col-md-6">
+              <div className="col-md-8">
                 <textarea
+                  rows="5"
                   className="form-control"
                   type="text"
                   name="vs2"
@@ -243,12 +251,13 @@ const PromptForm = () => {
               </div>
             </div>
             <div className="mb-3 row">
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <label className="form-label">Power Page URLs:</label><br />
                 <label className="form-label">(One per line)</label>
               </div>
-              <div className="col-md-6">
+              <div className="col-md-8">
                 <textarea
+                  rows="5"
                   className="form-control"
                   type="text"
                   name="vs3"
@@ -259,11 +268,12 @@ const PromptForm = () => {
               </div>
             </div>
             <div className="mb-3 row">
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <label className="form-label">Prompt Note:</label>
               </div>
-              <div className="col-md-6">
+              <div className="col-md-8">
                 <textarea
+                  rows="5"
                   className="form-control"
                   type="text"
                   name="promptNote"
@@ -274,11 +284,12 @@ const PromptForm = () => {
               </div>
             </div>
             <div className="mb-3 row">
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <label className="form-label">Prompt Text:</label>
               </div>
-              <div className="col-md-6">
+              <div className="col-md-8">
                 <textarea
+                  rows="5"
                   className="form-control"
                   type="text"
                   name="promptText"
@@ -290,11 +301,11 @@ const PromptForm = () => {
               </div>
             </div>
             <div className="mb-3 row">
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <label className="form-label">Template Name (Optional):</label><br />
-                <label className="form-label" style={{ fontSize: "14px" }}>Add a name to save the prompt as a template. <br /> Create API Prompt Queues:</label>
+                <label className="form-label" style={{ fontSize: "14px" }}>Add a name to save the prompt as a template.</label>
               </div>
-              <div className="col-md-6">
+              <div className="col-md-8">
                 <input
                   className="form-control"
                   type="text"
@@ -302,6 +313,35 @@ const PromptForm = () => {
                   value={formData.templateName}
                   onChange={handleChange}
                 />
+              </div>
+            </div>
+            <div className="mb-3 row">
+              <div className="col-md-3">
+                <label className="form-label" style={{ fontSize: "14px" }}>Create AI Prompt Queues:</label>
+              </div>
+              <div className="col-md-8">
+                <div >
+                  <label style={{ marginRight: "10px" }}>
+                    <input
+                      type="radio"
+                      value="option1"
+                      name="promptNote"
+                      checked={selectedOption === "yes"}
+                      onChange={() => handleRadioChange("yes")}
+                    />
+                    y
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      value="option2"
+                      name="promptNote"
+                      checked={selectedOption === "no"}
+                      onChange={() => handleRadioChange("no")}
+                    />
+                    n
+                  </label>
+                </div>
               </div>
             </div>
             <button onClick={handleNext} className="btn btn-primary w-100">Process</button>
