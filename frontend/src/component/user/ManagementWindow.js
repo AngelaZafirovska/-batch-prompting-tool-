@@ -14,26 +14,31 @@ const ManagementWindow = () => {
   const history = useHistory();
   const [data, setData] = useState([]);
   const [promptsNum, setPromptsNum] = useState(0)
+  const [isFetched, setIsFetched] = useState(false); 
 
   useEffect(() => {
-    const userData = isAuth();
-    const data = { userId: userData._id }
+    if (!isFetched) {
+      const userData = isAuth();
+      const data = { userId: userData._id };
 
-    getAllDomains(data).then((res) => {
-      if (res) {
-        const domains = res.allDomains
-        if (domains?.length > 0) {
-          const num = domains.reduce((accumulator, domain) => {
-            return accumulator + domain.prompts_tobe_fetched;
-          }, 0);
+      getAllDomains(data)
+        .then((res) => {
+          if (res) {
+            const domains = res.allDomains;
+            if (domains?.length > 0) {
+              const num = domains.reduce((accumulator, domain) => {
+                return accumulator + domain.prompts_tobe_fetched;
+              }, 0);
 
-          setPromptsNum(num)
-          setData(domains)
-        }
-      }
-    })
-      .catch((err) => console.log(err))
-  }, [])
+              setPromptsNum(num);
+              setData(domains);
+            }
+            setIsFetched(true);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [isFetched])
 
 
   const [sortConfig, setSortConfig] = useState(null);
@@ -105,24 +110,27 @@ const ManagementWindow = () => {
       </div>
       <h3 className="text-center">OpenAI API FAQ Prompts</h3>
       <br />
-      {
-        promptsNum > 0 &&
-        <>
-          <h5 className="text-center" style={{ color: "#ff3300", fontSize: "16px", marginBottom: "1.5rem" }}>
-            There are {promptsNum} prompts left to be fetched.
-            <br />
-            The page will autoload until you close this window.
-          </h5>
-          <a href="" style={{ color: '#ff6600', textDecorationStyle: "underline", textDecorationColor: "#ff6600" }} onClick={hanldeLink}>
-            <h3 className="text-center" style={{ color: "#ff4500", textDecorationColor: "#ff4400", textDecorationStyle: "underline", cursor: "pointer" }}>
-              Start Autoload to Fetch All
-            </h3>
-          </a>
-        </>
-      }
+
+      {paginatedData.length === 0 && !isFetched && (
+        <div className="alert alert-primary" role="alert">
+          Loading...
+        </div>
+      )}
+
+      <h5 className="text-center" style={{ color: "#ff3300", fontSize: "16px", marginBottom: "1.5rem" }}>
+        There are {promptsNum} prompts left to be fetched.
+        <br />
+        The page will autoload until you close this window.
+      </h5>
+      <a href="" style={{ color: '#ff6600', textDecorationStyle: "underline", textDecorationColor: "#ff6600" }} onClick={hanldeLink}>
+        <h3 className="text-center" style={{ color: "#ff4500", textDecorationColor: "#ff4400", textDecorationStyle: "underline", cursor: "pointer" }}>
+          Start Autoload to Fetch All
+        </h3>
+      </a>
       <br />
       <br />
       <h5 className="text-center">List of All Domains</h5>
+
       <table className="table table-bordered">
         <thead className="thead-light">
           <tr>

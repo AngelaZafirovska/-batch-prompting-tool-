@@ -8,42 +8,43 @@ const AdminFetch = () => {
   // const inputData = useSelector((store) => store.inputData);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false)
-  const [fetchLoad, setFetchLoad] = useState(false)
+  const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const userData = isAuth();
-      const fetchParams = { userId: userData._id };
+    if (!isFetched) {
+      const fetchData = async () => {
+        const userData = isAuth();
+        const fetchParams = { userId: userData._id };
 
-      setFetchLoad(true);
-      try {
-        const res = await fetchResults(fetchParams);
-        if (res) {
-          const templates = res.templates?.map((val, i) => {
-            const date = new Date(val.date);
-            const formattedDate = date.toLocaleDateString("en-US", {
-              month: "2-digit",
-              day: "2-digit",
-              year: "numeric",
+        try {
+          const res = await fetchResults(fetchParams);
+          if (res) {
+            const templates = res.templates?.map((val, i) => {
+              const date = new Date(val.date);
+              const formattedDate = date.toLocaleDateString("en-US", {
+                month: "2-digit",
+                day: "2-digit",
+                year: "numeric",
+              });
+              return {
+                templateId: val._id,
+                no: `${i + 1} of ${res.templates.length}`,
+                date: formattedDate,
+                templateName: val.template_name,
+              };
             });
-            return {
-              templateId: val._id,
-              no: `${i + 1} of ${res.templates.length}`,
-              date: formattedDate,
-              templateName: val.template_name,
-            };
-          });
-          setData(templates || []);
+            setData(templates || []);
+          }
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setIsFetched(true);
         }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setFetchLoad(false);
-      }
-    };
+      };
 
-    fetchData();
-  }, [fetchLoad]);
+      fetchData();
+    }
+  }, [isFetched])
 
   const [sortConfig, setSortConfig] = useState(null);
   const [filterText, setFilterText] = useState("");
@@ -136,7 +137,7 @@ const AdminFetch = () => {
           Now template load processing...
         </div>
       }
-      {paginatedData.length === 0 && fetchLoad && (
+      {paginatedData.length === 0 && !isFetched && (
         <div className="alert alert-primary" role="alert">
           Loading...
         </div>
