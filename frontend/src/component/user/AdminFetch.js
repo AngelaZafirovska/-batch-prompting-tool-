@@ -10,6 +10,36 @@ const AdminFetch = () => {
   const [loading, setLoading] = useState(false)
   const [isFetched, setIsFetched] = useState(false);
 
+  const [sortConfig, setSortConfig] = useState(null);
+  const [filterText, setFilterText] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 10;
+
+  const sortedData = React.useMemo(() => {
+    let sortableItems = [...data];
+    if (sortConfig !== null) {
+      sortableItems.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === "ascending" ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === "ascending" ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableItems;
+  }, [data, sortConfig]);
+
+  const filteredData = sortedData.filter((item) =>
+    item.templateName.toLowerCase().includes(filterText.toLowerCase())
+  );
+
+  const paginatedData = filteredData.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
+
   useEffect(() => {
     if (!isFetched) {
       const fetchData = async () => {
@@ -44,37 +74,7 @@ const AdminFetch = () => {
 
       fetchData();
     }
-  }, [isFetched])
-
-  const [sortConfig, setSortConfig] = useState(null);
-  const [filterText, setFilterText] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 10;
-
-  const sortedData = React.useMemo(() => {
-    let sortableItems = [...data];
-    if (sortConfig !== null) {
-      sortableItems.sort((a, b) => {
-        if (a[sortConfig.key] < b[sortConfig.key]) {
-          return sortConfig.direction === "ascending" ? -1 : 1;
-        }
-        if (a[sortConfig.key] > b[sortConfig.key]) {
-          return sortConfig.direction === "ascending" ? 1 : -1;
-        }
-        return 0;
-      });
-    }
-    return sortableItems;
-  }, [data, sortConfig]);
-
-  const filteredData = sortedData.filter((item) =>
-    item.templateName.toLowerCase().includes(filterText.toLowerCase())
-  );
-
-  const paginatedData = filteredData.slice(
-    (currentPage - 1) * rowsPerPage,
-    currentPage * rowsPerPage
-  );
+  }, [isFetched, paginatedData])
 
   const requestSort = (key) => {
     let direction = "ascending";
