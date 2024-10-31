@@ -251,8 +251,8 @@ const AdminFetch = () => {
             :
             <>
               {isFetched ?
-                <div className="alert alert-primary" role="alert">
-                  No Data
+                <div className="text-center">
+                  No data. Please enter form data and press the 'Process' button.
                 </div>
                 :
                 null
