@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 // import { useSelector } from "react-redux";
-import { fetchTemplates, loadData } from "../../action/promptAction";
+import { fetchTemplates, loadData, getFormData } from "../../action/promptAction";
 import { isAuth } from "../../action/authAction";
 
 const AdminFetch = () => {
@@ -9,6 +9,7 @@ const AdminFetch = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false)
   const [isFetched, setIsFetched] = useState(false);
+  const [noForm, setNoForm] = useState(false)
 
   const [sortConfig, setSortConfig] = useState(null);
   const [filterText, setFilterText] = useState("");
@@ -46,6 +47,9 @@ const AdminFetch = () => {
     const fetchParams = { userId: userData?._id };
 
     try {
+      const formRes = await getFormData(fetchParams);
+      if (!formRes?.form) setNoForm(true)
+
       const res = await fetchTemplates(fetchParams); // Assuming `fetchTemplates` is a function from props or imports
       if (res) {
         const templates = res.templates?.map((val, i) => {
@@ -76,15 +80,17 @@ const AdminFetch = () => {
       loadTemplates();
     }
 
-    const timer = setTimeout(() => {
-      if (data?.length === 0 && !hasReloaded.current) {
-        hasReloaded.current = true;
-        setIsFetched(false);
-      }
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, [isFetched, data, loadTemplates]);
+    if (!noForm) {
+      const timer = setTimeout(() => {
+        if (data?.length === 0 && !hasReloaded.current) {
+          hasReloaded.current = true;
+          setIsFetched(false);
+        }
+      }, 1000);
+  
+      return () => clearTimeout(timer);
+    }
+  }, [isFetched, data, noForm, loadTemplates]);
 
   const requestSort = (key) => {
     let direction = "ascending";
