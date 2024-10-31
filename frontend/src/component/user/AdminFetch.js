@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 // import { useSelector } from "react-redux";
 import { fetchTemplates, loadData } from "../../action/promptAction";
@@ -14,6 +14,7 @@ const AdminFetch = () => {
   const [filterText, setFilterText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
+  const hasReloaded = useRef(false); 
 
   const sortedData = React.useMemo(() => {
     let sortableItems = [...data];
@@ -76,13 +77,14 @@ const AdminFetch = () => {
     }
 
     const timer = setTimeout(() => {
-      if (data?.length === 0) {
-        window.location.reload();
+      if (data?.length === 0 && !hasReloaded.current) {
+        hasReloaded.current = true;
+        setIsFetched(false);
       }
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [isFetched, loadTemplates]);
+  }, [isFetched, data, loadTemplates]);
 
   const requestSort = (key) => {
     let direction = "ascending";
