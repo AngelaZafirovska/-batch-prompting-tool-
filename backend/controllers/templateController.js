@@ -41,7 +41,6 @@ const generateTemplateResponse = async (req, res) => {
       .filter(url => url.length > 0);
 
     let vs2Keywords = [];
-    let vs3Keywords = [];
     const maxKeywords = 10;
 
     // Get variable keywords
@@ -57,16 +56,9 @@ const generateTemplateResponse = async (req, res) => {
     }
 
     // Get optional keywords
-    const optionalKeywords = keywords_second && keywords_second
+    const vs3Keywords = keywords_second && keywords_second
       .split(/[\n\s]+/) // Use regex to split by newline and space
       .filter(url => url.length > 0);
-
-    if (optionalKeywords.length > maxKeywords) {
-      const cutKeywords = splitArrayIntoChunks(optionalKeywords);
-      vs3Keywords = cutKeywords
-    } else {
-      vs3Keywords.push(keywords_second)
-    }
 
     // Replace needed brackets in prompt text
     const seedText = prompt_text.replaceAll("[FS1]", seed_content_required)
